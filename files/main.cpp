@@ -2,15 +2,12 @@
 #include "config.h"
 #include "game.h"
 
-// The custom callback function that the library calls
-// to check for and set the current application state.
 void update(float ms)
 {
-    Game* game = reinterpret_cast<Game *>(graphics::getUserData());
+    Game* game = reinterpret_cast<Game*>(graphics::getUserData());
     game->update();
 }
 
-// The window content drawing function.
 void draw()
 {
     Game* game = reinterpret_cast<Game*>(graphics::getUserData());
