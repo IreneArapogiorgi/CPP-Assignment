@@ -5,12 +5,13 @@
 
 void Game::update()
 {
-	if (!playerA_initialized && !playerB_initialized && obstacles && graphics::getGlobalTime() > 500)
+	if (!playerA_initialized && !playerB_initialized && graphics::getGlobalTime() > 500)
 	{
-		playerA = new PlayerA(*this);
+		// Create players
+		playerA = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, graphics::SCANCODE_A, graphics::SCANCODE_S);
 		playerA_initialized = true;
 
-		playerB = new PlayerB(*this);
+		playerB = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, graphics::SCANCODE_K, graphics::SCANCODE_L);
 		playerB_initialized = true;
 	}
 
@@ -42,45 +43,27 @@ void Game::draw()
 	}
 
 	// Draw obstacles
-	if (obstacles)
+	if (obstacle_array1 && obstacle_array2 && obstacle_array3 && obstacle_array4)
 	{
 		for (int i = 0; i < OBSTACLES_NUM; i++)
 		{
-			obstacles[i]->draw();
+			obstacle_array1[i]->draw();
+			obstacle_array2[i]->draw();
+			obstacle_array3[i]->draw();
+			obstacle_array4[i]->draw();
 		}
 	}
 }
 
 void Game::init()
 {
-	// Initialize obstacles
+	// Create obstacles
 	for (int i = 0; i < OBSTACLES_NUM; i++)
 	{
-		obstacles[i] = new Obstacle(*this);
-	}
-
-	int count = 0;
-	for (int i = 0; i < 25; i++)
-	{
-		count++;
-		obstacles[i]->setX(count * 20 + CANVAS_WIDTH / 4);
-		obstacles[i]->setY(CANVAS_HEIGHT / 2);
-	}
-
-	count = 0;
-	for (int i = 25; i < 46; i++)
-	{
-		count++;
-		obstacles[i]->setX(count * 20 + CANVAS_WIDTH / 3.5);
-		obstacles[i]->setY(CANVAS_HEIGHT / 2 + 20);
-	}
-
-	count = 0;
-	for (int i = 46; i < 67; i++)
-	{
-		count++;
-		obstacles[i]->setX(count * 20 + CANVAS_WIDTH / 3.5);
-		obstacles[i]->setY(CANVAS_HEIGHT / 2 - 20);
+		obstacle_array1[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50, 20, 20);
+		obstacle_array2[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 - 20, 20, 20);
+		obstacle_array3[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10, 20, 20);
+		obstacle_array4[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40, 20, 20);
 	}
 }
 
@@ -100,12 +83,18 @@ Game::~Game()
 		delete playerB;
 	}
 
-	if (obstacles)
+	if (obstacle_array1 && obstacle_array2 && obstacle_array3 && obstacle_array4)
 	{
 		for (int i = 0; i < OBSTACLES_NUM; i++)
 		{
-			delete obstacles[i];
+			delete obstacle_array1[i];
+			delete obstacle_array2[i];
+			delete obstacle_array3[i];
+			delete obstacle_array4[i];
 		}
-		delete[] obstacles;
+		delete[] obstacle_array1;
+		delete[] obstacle_array2;
+		delete[] obstacle_array3;
+		delete[] obstacle_array4;
 	}
 }

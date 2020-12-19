@@ -1,18 +1,19 @@
 #pragma once
 #include "obstacle.h"
-#include "playerA.h"
-#include "playerB.h"
-#include "config.h"
+#include "player.h"
 
 class Game
 {
-	PlayerA* playerA = nullptr;
+	Player* playerA = nullptr;
 	bool playerA_initialized = false;
 
-	PlayerB* playerB = nullptr;
+	Player* playerB = nullptr;
 	bool playerB_initialized = false;
 
-	Obstacle** obstacles = new Obstacle * [OBSTACLES_NUM];
+	Obstacle** obstacle_array1 = new Obstacle * [OBSTACLES_NUM];
+	Obstacle** obstacle_array2 = new Obstacle * [OBSTACLES_NUM];
+	Obstacle** obstacle_array3 = new Obstacle * [OBSTACLES_NUM];
+	Obstacle** obstacle_array4 = new Obstacle * [OBSTACLES_NUM];
 public:
 	void update();
 	void draw();

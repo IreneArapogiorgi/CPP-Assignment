@@ -3,11 +3,12 @@
 
 class Player : public GameObject
 {
+	graphics::scancode_t keyLeft, keyRight;
 	const float speed = 10.0f;
 public:
-	virtual void update() = 0;
-	virtual void draw() = 0;
-	virtual void init() = 0;
+	void update() override;
+	void draw() override;
+	void init() override;
 	const float getSpeed() { return speed; }
-	Player(const class Game& mygame);
+	Player(const class Game& mygame, float pos_x, float pos_y, float width, float height, graphics::scancode_t keyLeft, graphics::scancode_t keyRight);
 };

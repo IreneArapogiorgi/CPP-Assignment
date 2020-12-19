@@ -1,4 +1,3 @@
-#include "graphics.h"
 #include "obstacle.h"
 #include "config.h"
 
@@ -8,16 +7,16 @@ void Obstacle::update()
 
 void Obstacle::draw()
 {
-	graphics::Brush br;
+	// Draw obstacle
 	br.texture = std::string(ASSET_PATH) + "ghost.png";
 	br.outline_opacity = 0.0f;
-	graphics::drawRect(pos_x, pos_y, 20, 20, br);
+	graphics::drawRect(pos_x, pos_y, width, height, br);
 }
 
 void Obstacle::init()
 {
 }
 
-Obstacle::Obstacle(const Game& mygame) : GameObject(mygame)
+Obstacle::Obstacle(const Game& mygame, float pos_x, float pos_y, float width, float height) : GameObject(mygame, pos_x, pos_y, width, height)
 {
 }
