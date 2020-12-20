@@ -4,6 +4,8 @@
 
 class Game
 {
+	bool debug_mode = false;
+
 	Player* playerA = nullptr;
 	bool playerA_initialized = false;
 
@@ -18,6 +20,8 @@ public:
 	void update();
 	void draw();
 	void init();
+	void setDebugMode(bool d) { debug_mode = d; }
+	bool getDebugMode() { return debug_mode; }
 	Game();
 	~Game();
 };
