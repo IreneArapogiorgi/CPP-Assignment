@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics.h"
+#include "util.h"
 
 class GameObject
 {
@@ -13,4 +14,10 @@ public:
 	virtual void init() = 0;
 	GameObject(const class Game& mygame, float pos_x, float pos_y, float width, float height);
 	~GameObject();
+};
+
+class Collidable
+{
+public:
+	virtual Disk getCollisionHull() const = 0;
 };

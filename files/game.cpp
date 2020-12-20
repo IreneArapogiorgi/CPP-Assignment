@@ -3,6 +3,11 @@
 #include "config.h"
 #include "game.h"
 
+bool Game::checkCollision()
+{
+	return false;
+}
+
 void Game::update()
 {
 	if (!playerA_initialized && !playerB_initialized && graphics::getGlobalTime() > 500)
@@ -60,10 +65,10 @@ void Game::init()
 	// Create obstacles
 	for (int i = 0; i < OBSTACLES_NUM; i++)
 	{
-		obstacle_array1[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50, 20, 20);
-		obstacle_array2[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 - 20, 20, 20);
-		obstacle_array3[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10, 20, 20);
-		obstacle_array4[i] = new Obstacle(*this, i * 20 + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40, 20, 20);
+		obstacle_array1[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50, 20, 20);
+		obstacle_array2[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 - 20, 20, 20);
+		obstacle_array3[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10, 20, 20);
+		obstacle_array4[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40, 20, 20);
 	}
 }
 

@@ -16,12 +16,14 @@ class Game
 	Obstacle** obstacle_array2 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array3 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array4 = new Obstacle * [OBSTACLES_NUM];
+
+	bool checkCollision();
 public:
 	void update();
 	void draw();
 	void init();
 	void setDebugMode(bool d) { debug_mode = d; }
-	bool getDebugMode() { return debug_mode; }
+	bool getDebugMode() const { return debug_mode; }
 	Game();
 	~Game();
 };
