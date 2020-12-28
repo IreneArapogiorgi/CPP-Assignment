@@ -1,21 +1,21 @@
 #pragma once
 #include "obstacle.h"
 #include "player.h"
+#include "ball.h"
 
 class Game
 {
 	bool debug_mode = false;
 
 	Player* playerA = nullptr;
-	bool playerA_initialized = false;
-
 	Player* playerB = nullptr;
-	bool playerB_initialized = false;
 
 	Obstacle** obstacle_array1 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array2 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array3 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array4 = new Obstacle * [OBSTACLES_NUM];
+
+	Ball* ball = nullptr;
 
 	bool checkCollision();
 public:

@@ -10,16 +10,6 @@ bool Game::checkCollision()
 
 void Game::update()
 {
-	if (!playerA_initialized && !playerB_initialized && graphics::getGlobalTime() > 500)
-	{
-		// Create players
-		playerA = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, graphics::SCANCODE_A, graphics::SCANCODE_S);
-		playerA_initialized = true;
-
-		playerB = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, graphics::SCANCODE_K, graphics::SCANCODE_L);
-		playerB_initialized = true;
-	}
-
 	if (playerA)
 	{
 		playerA->update();
@@ -28,6 +18,11 @@ void Game::update()
 	if (playerB)
 	{
 		playerB->update();
+	}
+
+	if (ball)
+	{
+		ball->update();
 	}
 }
 
@@ -58,6 +53,12 @@ void Game::draw()
 			obstacle_array4[i]->draw();
 		}
 	}
+
+	// Draw ball
+	if (ball)
+	{
+		ball->draw();
+	}
 }
 
 void Game::init()
@@ -74,6 +75,13 @@ void Game::init()
 
 Game::Game()
 {
+	// Create players
+	playerA = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, graphics::SCANCODE_A, graphics::SCANCODE_S);
+	playerB = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, graphics::SCANCODE_K, graphics::SCANCODE_L);
+
+	// Create ball
+	ball = new Ball(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 85, 25, 25);
+	ball->init();
 }
 
 Game::~Game()
@@ -101,5 +109,10 @@ Game::~Game()
 		delete[] obstacle_array2;
 		delete[] obstacle_array3;
 		delete[] obstacle_array4;
+	}
+
+	if (ball)
+	{
+		delete ball;
 	}
 }
