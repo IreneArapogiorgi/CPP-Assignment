@@ -16,6 +16,7 @@ class Game
 	Obstacle** obstacle_array4 = new Obstacle * [OBSTACLES_NUM];
 
 	Ball* ball = nullptr;
+	bool ball_initialized = false;
 
 	bool checkCollision();
 public:

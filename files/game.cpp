@@ -20,7 +20,13 @@ void Game::update()
 		playerB->update();
 	}
 
-	if (ball)
+	// Start ball movement when playerA begins playing
+	if (!ball_initialized && (graphics::getKeyState(graphics::SCANCODE_A) || graphics::getKeyState(graphics::SCANCODE_S)))
+	{
+		ball_initialized = true;
+	}
+
+	if (ball && ball_initialized)
 	{
 		ball->update();
 	}
@@ -71,6 +77,9 @@ void Game::init()
 		obstacle_array3[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10, 20, 20);
 		obstacle_array4[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40, 20, 20);
 	}
+
+	// Initialize ball
+	ball->init();
 }
 
 Game::Game()
@@ -80,8 +89,7 @@ Game::Game()
 	playerB = new Player(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, graphics::SCANCODE_K, graphics::SCANCODE_L);
 
 	// Create ball
-	ball = new Ball(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 85, 25, 25);
-	ball->init();
+	ball = new Ball(*this, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 65, 25, 25);
 }
 
 Game::~Game()
