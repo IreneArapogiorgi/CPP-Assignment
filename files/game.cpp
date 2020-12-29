@@ -3,8 +3,21 @@
 #include "config.h"
 #include "game.h"
 
-bool Game::checkCollision()
+bool Game::checkPlayerCollision(const Player& player)
 {
+	if (&player && ball)
+	{
+		Disk player_disk = player.getCollisionHull();
+		Disk ball_disk = ball->getCollisionHull();
+
+		float dx = player_disk.cx - ball_disk.cx;
+		float dy = player_disk.cy - ball_disk.cy;
+
+		if (sqrt(dx*dx + dy*dy) < player_disk.radius + ball_disk.radius)
+			return true;
+		else
+			return false;
+	}
 	return false;
 }
 
@@ -28,6 +41,22 @@ void Game::update()
 
 	if (ball && ball_initialized)
 	{
+		ball->update();
+	}
+
+	// Check collision between ball and playerA
+	if (playerA && checkPlayerCollision(*playerA))
+	{
+		// Re-direct ball
+		ball->init();
+		ball->update();
+	}
+
+	// Check collision between ball and playerB
+	if (playerB && checkPlayerCollision(*playerB))
+	{
+		// Re-direct ball
+		ball->init();
 		ball->update();
 	}
 }

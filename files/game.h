@@ -18,7 +18,8 @@ class Game
 	Ball* ball = nullptr;
 	bool ball_initialized = false;
 
-	bool checkCollision();
+	bool checkPlayerCollision(const Player& player);
+	//bool checkObstacleCollision(Obstacle& obstacle);
 public:
 	void update();
 	void draw();
