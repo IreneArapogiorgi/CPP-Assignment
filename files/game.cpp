@@ -2,7 +2,16 @@
 #include "obstacle.h"
 #include "config.h"
 #include "game.h"
-#include <iostream>
+#include "util.h"
+
+// Map obstacle arrays
+void Game::mapObstacles()
+{
+	obstacle_array.insert(std::make_pair("obstacle_array1", obstacle_array1));
+	obstacle_array.insert(std::make_pair("obstacle_array2", obstacle_array2));
+	obstacle_array.insert(std::make_pair("obstacle_array3", obstacle_array3));
+	obstacle_array.insert(std::make_pair("obstacle_array4", obstacle_array4));
+}
 
 // Fill obstacles array with all active obstacles
 void Game::setObstacles(Obstacle* obstacle)
@@ -10,40 +19,20 @@ void Game::setObstacles(Obstacle* obstacle)
 	obstacles[obstacles_index++] = obstacle;
 }
 
+// Remove obstacle after collision
 void Game::removeObstacle(Obstacle& obstacle, int index)
 {
-	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
-		if (&(*obstacle_array1[i]) == &obstacle) {
-			delete& (*obstacle_array1[i]);
-			obstacle_array1[i] = nullptr;
-			break;
+	for (int i = 0; i < OBSTACLE_ROWS; i++) {
+		array_name = "obstacle_array" + std::to_string(i + 1);
+
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+			if (&(*obstacle_array[array_name][j]) == &obstacle) {
+				delete& (*obstacle_array[array_name][j]);
+				obstacle_array[array_name][j] = nullptr;
+				break;
+			}
 		}
 	}
-
-	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
-		if (&(*obstacle_array2[i]) == &obstacle) {
-			delete& (*obstacle_array2[i]);
-			obstacle_array2[i] = nullptr;
-			break;
-		}
-	}
-
-	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
-		if (&(*obstacle_array3[i]) == &obstacle) {
-			delete& (*obstacle_array3[i]);
-			obstacle_array3[i] = nullptr;
-			break;
-		}
-	}
-
-	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
-		if (&(*obstacle_array4[i]) == &obstacle) {
-			delete& (*obstacle_array4[i]);
-			obstacle_array4[i] = nullptr;
-			break;
-		}
-	}
-
 	obstacles[index] = nullptr;
 }
 
@@ -125,7 +114,7 @@ void Game::update()
 	// Check collision between ball and obstacles
 	if (obstacles)
 	{
-		for (int i = 0; i < OBSTACLES_PER_ROW * 4; i++)
+		for (int i = 0; i < OBSTACLES_PER_ROW * OBSTACLE_ROWS; i++)
 		{
 			int index = checkObstacleCollision(*obstacles[i], i);
 			if (index != -1)
@@ -165,21 +154,24 @@ void Game::draw()
 	}
 
 	// Draw obstacles
-	if (obstacle_array1 && obstacle_array2 && obstacle_array3 && obstacle_array4)
-	{
-		for (int i = 0; i < OBSTACLES_PER_ROW; i++)
+	for (int i = 0; i < OBSTACLE_ROWS; i++) {
+		array_name = "obstacle_array" + std::to_string(i + 1);
+
+		if (obstacle_array[array_name])
 		{
-			// Draw each obstacle if it's not already destroyed
-			if (obstacle_array1[i]) obstacle_array1[i]->draw();
-			if (obstacle_array2[i]) obstacle_array2[i]->draw();
-			if (obstacle_array3[i]) obstacle_array3[i]->draw();
-			if (obstacle_array4[i]) obstacle_array4[i]->draw();
+			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+				// Draw each obstacle only if it's not already destroyed
+				if (obstacle_array[array_name][j]) obstacle_array[array_name][j]->draw();
+			}
 		}
 	}
 }
 
 void Game::init()
 {
+	// Map obstacle arrays
+	mapObstacles();
+
 	// Create obstacles
 	for (int i = 0; i < OBSTACLES_PER_ROW; i++)
 	{
@@ -227,19 +219,16 @@ Game::~Game()
 		delete ball;
 	}
 
-	if (obstacle_array1 && obstacle_array2 && obstacle_array3 && obstacle_array4)
-	{
-		for (int i = 0; i < OBSTACLES_PER_ROW; i++)
+	for (int i = 0; i < OBSTACLE_ROWS; i++) {
+		array_name = "obstacle_array" + std::to_string(i + 1);
+
+		if (obstacle_array[array_name])
 		{
-			delete obstacle_array1[i];
-			delete obstacle_array2[i];
-			delete obstacle_array3[i];
-			delete obstacle_array4[i];
+			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+				delete obstacle_array[array_name][i];
+			}
+			delete[] obstacle_array[array_name];
 		}
-		delete[] obstacle_array1;
-		delete[] obstacle_array2;
-		delete[] obstacle_array3;
-		delete[] obstacle_array4;
 	}
 
 	if (obstacles)

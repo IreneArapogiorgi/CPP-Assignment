@@ -1,4 +1,7 @@
 #pragma once
+#include <iostream>
+#include <map>
+#include <string>
 
 struct Disk {
 	float cx, cy;

@@ -2,6 +2,7 @@
 #include "obstacle.h"
 #include "player.h"
 #include "ball.h"
+#include <map>
 
 class Game
 {
@@ -22,6 +23,10 @@ class Game
 
 	Ball* ball = nullptr;
 	bool ball_initialized = false;
+
+	std::string array_name;
+	std::map<std::string, Obstacle**> obstacle_array;
+	void mapObstacles();
 
 	void setObstacles(Obstacle* obstacle);
 	void removeObstacle(Obstacle& obstacle, int index);
