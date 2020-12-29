@@ -8,12 +8,11 @@
 void Game::setObstacles(Obstacle* obstacle)
 {
 	obstacles[obstacles_index++] = obstacle;
-	//std::cout << obstacle << " " << obstacles[obstacles_index - 1] << std::endl;
 }
 
-/*void Game::removeObstacle(Obstacle& obstacle)
+void Game::removeObstacle(Obstacle& obstacle, int index)
 {
-	for (int i = 0; i < OBSTACLES_NUM; i++) {
+	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
 		if (&(*obstacle_array1[i]) == &obstacle) {
 			delete& (*obstacle_array1[i]);
 			obstacle_array1[i] = nullptr;
@@ -21,7 +20,7 @@ void Game::setObstacles(Obstacle* obstacle)
 		}
 	}
 
-	for (int i = 0; i < OBSTACLES_NUM; i++) {
+	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
 		if (&(*obstacle_array2[i]) == &obstacle) {
 			delete& (*obstacle_array2[i]);
 			obstacle_array2[i] = nullptr;
@@ -29,7 +28,7 @@ void Game::setObstacles(Obstacle* obstacle)
 		}
 	}
 
-	for (int i = 0; i < OBSTACLES_NUM; i++) {
+	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
 		if (&(*obstacle_array3[i]) == &obstacle) {
 			delete& (*obstacle_array3[i]);
 			obstacle_array3[i] = nullptr;
@@ -37,14 +36,16 @@ void Game::setObstacles(Obstacle* obstacle)
 		}
 	}
 
-	for (int i = 0; i < OBSTACLES_NUM; i++) {
+	for (int i = 0; i < OBSTACLES_PER_ROW; i++) {
 		if (&(*obstacle_array4[i]) == &obstacle) {
 			delete& (*obstacle_array4[i]);
 			obstacle_array4[i] = nullptr;
 			break;
 		}
 	}
-}*/
+
+	obstacles[index] = nullptr;
+}
 
 bool Game::checkPlayerCollision(const Player& player)
 {
@@ -124,17 +125,17 @@ void Game::update()
 	// Check collision between ball and obstacles
 	if (obstacles)
 	{
-		for (int i = 0; i < OBSTACLES_NUM * 4; i++)
+		for (int i = 0; i < OBSTACLES_PER_ROW * 4; i++)
 		{
 			int index = checkObstacleCollision(*obstacles[i], i);
 			if (index != -1)
 			{
-				std::cout << "Collision " << index << std::endl;
+				// Remove collided obstacle
+				removeObstacle(*obstacles[i], i);
 
 				// Re-direct ball
 				ball->init();
 				ball->update();
-
 				break;
 			}
 		}
@@ -166,7 +167,7 @@ void Game::draw()
 	// Draw obstacles
 	if (obstacle_array1 && obstacle_array2 && obstacle_array3 && obstacle_array4)
 	{
-		for (int i = 0; i < OBSTACLES_NUM; i++)
+		for (int i = 0; i < OBSTACLES_PER_ROW; i++)
 		{
 			// Draw each obstacle if it's not already destroyed
 			if (obstacle_array1[i]) obstacle_array1[i]->draw();
@@ -180,7 +181,7 @@ void Game::draw()
 void Game::init()
 {
 	// Create obstacles
-	for (int i = 0; i < OBSTACLES_NUM; i++)
+	for (int i = 0; i < OBSTACLES_PER_ROW; i++)
 	{
 		obstacle_array1[i] = new Obstacle(*this, float(i * 20) + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50, 20, 20);
 		setObstacles(obstacle_array1[i]);
@@ -228,7 +229,7 @@ Game::~Game()
 
 	if (obstacle_array1 && obstacle_array2 && obstacle_array3 && obstacle_array4)
 	{
-		for (int i = 0; i < OBSTACLES_NUM; i++)
+		for (int i = 0; i < OBSTACLES_PER_ROW; i++)
 		{
 			delete obstacle_array1[i];
 			delete obstacle_array2[i];
