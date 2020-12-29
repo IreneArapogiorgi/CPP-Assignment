@@ -10,6 +10,11 @@ class Game
 	Player* playerA = nullptr;
 	Player* playerB = nullptr;
 
+	// Obstacles array stores all obstacles created
+	Obstacle** obstacles = new Obstacle * [OBSTACLES_NUM * 4];
+	int obstacles_index = 0;
+
+	// Each obstacle_array stores a row of obstacles
 	Obstacle** obstacle_array1 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array2 = new Obstacle * [OBSTACLES_NUM];
 	Obstacle** obstacle_array3 = new Obstacle * [OBSTACLES_NUM];
@@ -18,8 +23,10 @@ class Game
 	Ball* ball = nullptr;
 	bool ball_initialized = false;
 
+	void setObstacles(Obstacle* obstacle);
+	//void removeObstacle(Obstacle& obstacle);
 	bool checkPlayerCollision(const Player& player);
-	//bool checkObstacleCollision(Obstacle& obstacle);
+	int checkObstacleCollision(const Obstacle& obstacle, int index);
 public:
 	void update();
 	void draw();
