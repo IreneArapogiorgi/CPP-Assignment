@@ -4,75 +4,24 @@
 #include "game.h"
 #include "util.h"
 
-// Map obstacle arrays
-void Game::mapObstacles()
+void Game::updateStartScreen()
 {
-	obstacle_array.insert(std::make_pair("obstacle_array1", obstacle_array1));
-	obstacle_array.insert(std::make_pair("obstacle_array2", obstacle_array2));
-	obstacle_array.insert(std::make_pair("obstacle_array3", obstacle_array3));
-	obstacle_array.insert(std::make_pair("obstacle_array4", obstacle_array4));
-}
-
-// Fill obstacles array with all active obstacles
-void Game::setObstacles(Obstacle* obstacle)
-{
-	obstacles[obstacles_index++] = obstacle;
-}
-
-// Remove obstacle after collision
-void Game::removeObstacle(Obstacle& obstacle, int index)
-{
-	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		array_name = "obstacle_array" + std::to_string(i + 1);
-
-		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
-			if (&(*obstacle_array[array_name][j]) == &obstacle) {
-				delete& (*obstacle_array[array_name][j]);
-				obstacle_array[array_name][j] = nullptr;
-				break;
-			}
-		}
-	}
-	obstacles[index] = nullptr;
-}
-
-bool Game::checkPlayerCollision(const Player& player)
-{
-	if (&player && ball)
+	// Start game if Enter is pressed
+	if (graphics::getKeyState(graphics::SCANCODE_RETURN))
 	{
-		Disk player_disk = player.getCollisionHull();
-		Disk ball_disk = ball->getCollisionHull();
-
-		float dx = player_disk.cx - ball_disk.cx;
-		float dy = player_disk.cy - ball_disk.cy;
-
-		if (sqrt(dx * dx + dy * dy) < player_disk.radius + ball_disk.radius)
-			return true;
-		else
-			return false;
+		status = STATUS_LEVEL;
 	}
-	return false;
-}
 
-int Game::checkObstacleCollision(const Obstacle& obstacle, int index)
-{
-	if (&obstacle && ball)
+	// Start game if mouse is pressed
+	graphics::MouseState ms;
+	graphics::getMouseState(ms);
+	if (ms.button_left_pressed)
 	{
-		Disk obstacle_disk = obstacle.getCollisionHull();
-		Disk ball_disk = ball->getCollisionHull();
-		
-		float dx = obstacle_disk.cx - ball_disk.cx;
-		float dy = obstacle_disk.cy - ball_disk.cy;
-
-		if (sqrt(dx * dx + dy * dy) < obstacle_disk.radius + ball_disk.radius)
-			return index;
-		else
-			return -1;
+		status = STATUS_LEVEL;
 	}
-	return -1;
 }
 
-void Game::update()
+void Game::updateLevelScreen()
 {
 	if (playerA)
 	{
@@ -157,18 +106,46 @@ void Game::update()
 	}
 
 	// End game if each of the players loses
-	/*if (playerA && playerB && playerA->getLife() == 0)
+	if (playerA && playerB && playerA->getLife() == 0)
 	{
-
+		status = STATUS_END;
+		loser = 1;
 	}
-	
+
 	if (playerA && playerB && playerB->getLife() == 0)
 	{
-
-	}*/
+		status = STATUS_END;
+		loser = 2;
+	}
 }
 
-void Game::draw()
+void Game::updateEndScreen()
+{
+	// Go to start screen if Enter is pressed
+	if (graphics::getKeyState(graphics::SCANCODE_RETURN))
+	{
+		status = STATUS_START;
+	}
+
+	// Go to start screen if mouse is pressed
+	graphics::MouseState ms;
+	graphics::getMouseState(ms);
+	if (ms.button_left_pressed)
+	{
+		status = STATUS_START;
+	}
+}
+
+void Game::drawStartScreen()
+{
+	// Draw background
+	graphics::Brush br;
+	br.texture = std::string(ASSET_PATH) + "startscreen.png";
+	br.outline_opacity = 0.0f;
+	graphics::drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
+}
+
+void Game::drawLevelScreen()
 {
 	// Draw background
 	graphics::Brush br;
@@ -217,6 +194,117 @@ void Game::draw()
 				if (obstacle_array[array_name][j]) obstacle_array[array_name][j]->draw();
 			}
 		}
+	}
+}
+
+void Game::drawEndScreen()
+{
+	graphics::Brush br;
+	graphics::setFont(std::string(ASSET_PATH) + "info_font.ttf");
+
+	char info[15];
+	if (loser == 2) sprintf_s(info, "PLAYER A LOST!");
+	if (loser == 1) sprintf_s(info, "PLAYER B LOST!");
+	graphics::drawText(CANVAS_WIDTH / 3, CANVAS_HEIGHT / 2, 60, info, br);
+}
+
+// Map obstacle arrays
+void Game::mapObstacles()
+{
+	obstacle_array.insert(std::make_pair("obstacle_array1", obstacle_array1));
+	obstacle_array.insert(std::make_pair("obstacle_array2", obstacle_array2));
+	obstacle_array.insert(std::make_pair("obstacle_array3", obstacle_array3));
+	obstacle_array.insert(std::make_pair("obstacle_array4", obstacle_array4));
+}
+
+// Fill obstacles array with all active obstacles
+void Game::setObstacles(Obstacle* obstacle)
+{
+	obstacles[obstacles_index++] = obstacle;
+}
+
+// Remove obstacle after collision
+void Game::removeObstacle(Obstacle& obstacle, int index)
+{
+	for (int i = 0; i < OBSTACLE_ROWS; i++) {
+		array_name = "obstacle_array" + std::to_string(i + 1);
+
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+			if (&(*obstacle_array[array_name][j]) == &obstacle) {
+				delete& (*obstacle_array[array_name][j]);
+				obstacle_array[array_name][j] = nullptr;
+				break;
+			}
+		}
+	}
+	obstacles[index] = nullptr;
+}
+
+bool Game::checkPlayerCollision(const Player& player)
+{
+	if (&player && ball)
+	{
+		Disk player_disk = player.getCollisionHull();
+		Disk ball_disk = ball->getCollisionHull();
+
+		float dx = player_disk.cx - ball_disk.cx;
+		float dy = player_disk.cy - ball_disk.cy;
+
+		if (sqrt(dx * dx + dy * dy) < player_disk.radius + ball_disk.radius)
+			return true;
+		else
+			return false;
+	}
+	return false;
+}
+
+int Game::checkObstacleCollision(const Obstacle& obstacle, int index)
+{
+	if (&obstacle && ball)
+	{
+		Disk obstacle_disk = obstacle.getCollisionHull();
+		Disk ball_disk = ball->getCollisionHull();
+		
+		float dx = obstacle_disk.cx - ball_disk.cx;
+		float dy = obstacle_disk.cy - ball_disk.cy;
+
+		if (sqrt(dx * dx + dy * dy) < obstacle_disk.radius + ball_disk.radius)
+			return index;
+		else
+			return -1;
+	}
+	return -1;
+}
+
+void Game::update()
+{
+	if (status == STATUS_START)
+	{
+		updateStartScreen();
+	}
+	else if (status == STATUS_LEVEL)
+	{
+		updateLevelScreen();
+	}
+	else
+	{
+		updateEndScreen();
+	}
+}
+
+void Game::draw()
+{
+	if (status == STATUS_START)
+	{
+		drawStartScreen();
+	}
+	else if (status == STATUS_LEVEL)
+	{
+		drawLevelScreen();
+	}
+	else
+	{
+		drawEndScreen();
 	}
 }
 

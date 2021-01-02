@@ -7,6 +7,16 @@
 class Game
 {
 	bool debug_mode = false;
+	unsigned int loser = 0;
+
+	typedef enum {STATUS_START, STATUS_LEVEL, STATUS_END} status_t;
+	status_t status = STATUS_START;
+	void updateStartScreen();
+	void updateLevelScreen();
+	void updateEndScreen();
+	void drawStartScreen();
+	void drawLevelScreen();
+	void drawEndScreen();
 
 	Player* playerA = nullptr;
 	Player* playerB = nullptr;
