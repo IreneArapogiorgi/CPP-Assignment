@@ -85,7 +85,8 @@ void Game::update()
 	}
 
 	// Start ball movement when playerA begins playing
-	if (!ball_initialized && (graphics::getKeyState(graphics::SCANCODE_A) || graphics::getKeyState(graphics::SCANCODE_S)))
+	if (!ball_initialized && (graphics::getKeyState(graphics::SCANCODE_A) || graphics::getKeyState(graphics::SCANCODE_S)
+		|| graphics::getKeyState(graphics::SCANCODE_K) || graphics::getKeyState(graphics::SCANCODE_L)))
 	{
 		ball_initialized = true;
 	}
@@ -127,6 +128,31 @@ void Game::update()
 				ball->update();
 				break;
 			}
+		}
+	}
+
+	// Update each player's life
+	if (ball && ball->getBallMode() == 1)
+	{
+		if (playerA && playerA->getLife() > 0)
+		{
+			playerA->reduceLife();
+			ball->setPosX(playerA->getPosX());
+			ball->setPosY(CANVAS_HEIGHT - 65);
+			ball->setBallMode(0);
+			ball_initialized = false;
+		}
+	}
+
+	if (ball && ball->getBallMode() == 2)
+	{
+		if (playerB && playerB->getLife() > 0)
+		{
+			playerB->reduceLife();
+			ball->setPosX(playerB->getPosX());
+			ball->setPosY(65);
+			ball->setBallMode(0);
+			ball_initialized = false;
 		}
 	}
 }

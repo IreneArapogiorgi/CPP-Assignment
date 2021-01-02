@@ -28,20 +28,24 @@ void Ball::update()
 	}
 
 	if ((future_pos_y + radius) >= CANVAS_HEIGHT) {
-		math::vec2 dir{ direction_x, direction_y };
+		/*math::vec2 dir{ direction_x, direction_y };
 		math::vec2 normal = { 0.0f, -1.0f };
 		math::vec2 reflection = math::reflect(dir, normal);
 		direction_x = reflection.x;
 		direction_y = reflection.y;
-		play_collision_sound = true;
+		play_collision_sound = true;*/
+
+		ball_outofbounds = 2;
 	}
 	else if ((future_pos_y - radius) <= 0.0f) {
-		math::vec2 dir{ direction_x, direction_y };
+		/*math::vec2 dir{ direction_x, direction_y };
 		math::vec2 normal = { 0.0f, 1.0f };
 		math::vec2 reflection = math::reflect(dir, normal);
 		direction_x = reflection.x;
 		direction_y = reflection.y;
-		play_collision_sound = true;
+		play_collision_sound = true;*/
+
+		ball_outofbounds = 1;
 	}
 
 	if (play_collision_sound) {
