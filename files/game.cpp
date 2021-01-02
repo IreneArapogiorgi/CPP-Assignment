@@ -147,6 +147,22 @@ void Game::draw()
 		playerB->draw();
 	}
 
+	// Display UI info
+	if (playerA && playerB)
+	{
+		br.fill_color[0] = 1.0f;
+		br.fill_color[1] = 1.0f;
+		br.fill_color[2] = 1.0f;
+		graphics::setFont(std::string(ASSET_PATH) + "info_font.ttf");
+
+		char info[10];
+		sprintf_s(info, "Life: %d", playerA->getLife());
+		graphics::drawText(INFOTEXT_POSX, INFOTEXT_POSY, INFOTEXT_SIZE, info, br);
+
+		sprintf_s(info, "Life: %d", playerB->getLife());
+		graphics::drawText(INFOTEXT_POSX, CANVAS_HEIGHT - INFOTEXT_POSY, INFOTEXT_SIZE, info, br);
+	}
+
 	// Draw ball
 	if (ball)
 	{
