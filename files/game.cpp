@@ -155,6 +155,17 @@ void Game::update()
 			ball_initialized = false;
 		}
 	}
+
+	// End game if each of the players loses
+	/*if (playerA && playerB && playerA->getLife() == 0)
+	{
+
+	}
+	
+	if (playerA && playerB && playerB->getLife() == 0)
+	{
+
+	}*/
 }
 
 void Game::draw()
