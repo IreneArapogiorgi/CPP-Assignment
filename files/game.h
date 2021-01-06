@@ -1,47 +1,16 @@
 #pragma once
-#include "obstacle.h"
-#include "player.h"
-#include "ball.h"
-#include <map>
+#include "startscreen.h"
+#include "levelscreen.h"
+#include "endscreen.h"
 
 class Game
 {
 	bool debug_mode = false;
-	unsigned int loser = 0;
+	status_t status;
 
-	typedef enum {STATUS_START, STATUS_LEVEL, STATUS_END} status_t;
-	status_t status = STATUS_START;
-	void updateStartScreen();
-	void updateLevelScreen();
-	void updateEndScreen();
-	void drawStartScreen();
-	void drawLevelScreen();
-	void drawEndScreen();
-
-	Player* playerA = nullptr;
-	Player* playerB = nullptr;
-
-	// Obstacles array stores all obstacles created
-	Obstacle** obstacles = new Obstacle * [OBSTACLES_PER_ROW * OBSTACLE_ROWS];
-	int obstacles_index = 0;
-
-	// Each obstacle_array stores a row of obstacles
-	Obstacle** obstacle_array1 = new Obstacle * [OBSTACLES_PER_ROW];
-	Obstacle** obstacle_array2 = new Obstacle * [OBSTACLES_PER_ROW];
-	Obstacle** obstacle_array3 = new Obstacle * [OBSTACLES_PER_ROW];
-	Obstacle** obstacle_array4 = new Obstacle * [OBSTACLES_PER_ROW];
-
-	Ball* ball = nullptr;
-	bool ball_initialized = false;
-
-	std::string array_name;
-	std::map<std::string, Obstacle**> obstacle_array;
-	void mapObstacles();
-
-	void setObstacles(Obstacle* obstacle);
-	void removeObstacle(Obstacle& obstacle, int index);
-	bool checkPlayerCollision(const Player& player);
-	int checkObstacleCollision(const Obstacle& obstacle, int index);
+	StartScreen* startscreen = nullptr;
+	LevelScreen* levelscreen = nullptr;
+	EndScreen* endscreen = nullptr;
 public:
 	void update();
 	void draw();

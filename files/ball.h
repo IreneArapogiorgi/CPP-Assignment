@@ -5,7 +5,7 @@ class Ball : public GameObject, public Collidable
 {
 	float direction_x = 1.0f;
 	float direction_y = 0.0f;
-	const float speed = 2.0f;
+	const float speed = 2.12f;
 	unsigned int ball_outofbounds = 0;
 	float radius;
 public:
