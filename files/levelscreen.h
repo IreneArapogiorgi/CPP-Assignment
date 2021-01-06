@@ -11,6 +11,12 @@ class LevelScreen : public Screen
 	Player* playerA = nullptr;
 	Player* playerB = nullptr;
 
+	// Keys for players' movement
+	graphics::scancode_t playerA_keyL = graphics::SCANCODE_A;
+	graphics::scancode_t playerA_keyR = graphics::SCANCODE_D;
+	graphics::scancode_t playerB_keyL = graphics::SCANCODE_J;
+	graphics::scancode_t playerB_keyR = graphics::SCANCODE_L;
+
 	// Obstacles array stores all obstacles created
 	Obstacle** obstacles = new Obstacle * [OBSTACLES_PER_ROW * OBSTACLE_ROWS];
 	int obstacles_index = 0;

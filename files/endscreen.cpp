@@ -29,7 +29,7 @@ void EndScreen::draw()
 	graphics::drawText(CANVAS_WIDTH / 3, CANVAS_HEIGHT / 2, 70, gameover, br);
 
 	char newgame[32];
-	sprintf_s(newgame, "PRESS ENTER TO BEGIN A NEW GAME");
+	sprintf_s(newgame, "PRESS ENTER TO START A NEW GAME");
 	graphics::drawText(CANVAS_WIDTH / 5, CANVAS_HEIGHT / 1.7f, 40, newgame, br);
 }
 

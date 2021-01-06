@@ -14,6 +14,7 @@ void Game::update()
 	{
 		endscreen->update(status);
 		//levelscreen->~LevelScreen();
+		//delete levelscreen;
 
 		// Start new game
 		this->init();

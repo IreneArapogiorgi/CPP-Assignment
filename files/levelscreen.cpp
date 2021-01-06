@@ -85,8 +85,8 @@ void LevelScreen::update(status_t& status)
 	}
 
 	// Start ball movement when playerA begins playing
-	if (!ball_initialized && (graphics::getKeyState(graphics::SCANCODE_A) || graphics::getKeyState(graphics::SCANCODE_D)
-		|| graphics::getKeyState(graphics::SCANCODE_K) || graphics::getKeyState(graphics::SCANCODE_L)))
+	if (!ball_initialized && (graphics::getKeyState(playerA_keyL) || graphics::getKeyState(playerA_keyR)
+		|| graphics::getKeyState(playerB_keyL) || graphics::getKeyState(playerB_keyR)))
 	{
 		ball_initialized = true;
 	}
@@ -243,8 +243,8 @@ void LevelScreen::init()
 LevelScreen::LevelScreen(const Game& mygame) : Screen(mygame)
 {
 	// Create players
-	playerA = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, graphics::SCANCODE_A, graphics::SCANCODE_D);
-	playerB = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, graphics::SCANCODE_K, graphics::SCANCODE_L);
+	playerA = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, playerA_keyL, playerA_keyR);
+	playerB = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, playerB_keyL, playerB_keyR);
 
 	// Create ball
 	ball = new Ball(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 65, 25, 25);
