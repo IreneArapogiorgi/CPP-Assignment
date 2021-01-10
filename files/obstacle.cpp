@@ -32,6 +32,12 @@ void Obstacle::init()
 {
 }
 
+bool Obstacle::isAlive()
+{
+	if (life == 0) return false;
+	return true;
+}
+
 Disk Obstacle::getCollisionHull() const
 {
 	Disk disk;

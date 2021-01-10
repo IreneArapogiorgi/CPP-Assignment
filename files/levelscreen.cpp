@@ -4,36 +4,18 @@
 #include "game.h"
 #include "util.h"
 
-// Map obstacle arrays
-void LevelScreen::mapObstacles()
-{
-	obstacle_array.insert(std::make_pair("obstacle_array1", obstacle_array1));
-	obstacle_array.insert(std::make_pair("obstacle_array2", obstacle_array2));
-	obstacle_array.insert(std::make_pair("obstacle_array3", obstacle_array3));
-	obstacle_array.insert(std::make_pair("obstacle_array4", obstacle_array4));
-}
-
-// Fill obstacles array with all active obstacles
-void LevelScreen::setObstacles(Obstacle* obstacle)
-{
-	obstacles[obstacles_index++] = obstacle;
-}
-
 // Remove obstacle after collision
-void LevelScreen::removeObstacle(Obstacle& obstacle, int index)
+void LevelScreen::removeObstacle(Obstacle& obstacle)
 {
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		array_name = "obstacle_array" + std::to_string(i + 1);
-
 		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
-			if (&(*obstacle_array[array_name][j]) == &obstacle) {
-				delete& (*obstacle_array[array_name][j]);
-				obstacle_array[array_name][j] = nullptr;
+			if (&(*obstacles[i][j]) == &obstacle) {
+				delete& (*obstacles[i][j]);
+				obstacles[i][j] = nullptr;
 				break;
 			}
 		}
 	}
-	obstacles[index] = nullptr;
 }
 
 bool LevelScreen::checkPlayerCollision(const Player& player)
@@ -54,7 +36,7 @@ bool LevelScreen::checkPlayerCollision(const Player& player)
 	return false;
 }
 
-int LevelScreen::checkObstacleCollision(const Obstacle& obstacle, int index)
+int LevelScreen::checkObstacleCollision(const Obstacle& obstacle)
 {
 	if (&obstacle && ball)
 	{
@@ -65,11 +47,11 @@ int LevelScreen::checkObstacleCollision(const Obstacle& obstacle, int index)
 		float dy = obstacle_disk.cy - ball_disk.cy;
 
 		if (sqrt(dx * dx + dy * dy) < obstacle_disk.radius + ball_disk.radius)
-			return index;
+			return true;
 		else
-			return -1;
+			return false;
 	}
-	return -1;
+	return false;
 }
 
 void LevelScreen::update(status_t& status)
@@ -115,18 +97,18 @@ void LevelScreen::update(status_t& status)
 	// Check collision between ball and obstacles
 	if (obstacles)
 	{
-		for (int i = 0; i < OBSTACLES_PER_ROW * OBSTACLE_ROWS; i++)
-		{
-			int index = checkObstacleCollision(*obstacles[i], i);
-			if (index != -1)
-			{
-				// Remove collided obstacle
-				removeObstacle(*obstacles[i], i);
+		for (int i = 0; i < OBSTACLE_ROWS; i++) {
+			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+				if (checkObstacleCollision(*obstacles[i][j]))
+				{
+					// Remove collided obstacle
+					removeObstacle(*obstacles[i][j]);
 
-				// Re-direct ball
-				ball->init();
-				ball->update();
-				break;
+					// Re-direct ball
+					ball->init();
+					ball->update();
+					break;
+				}
 			}
 		}
 	}
@@ -203,13 +185,12 @@ void LevelScreen::draw()
 
 	// Draw obstacles
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		array_name = "obstacle_array" + std::to_string(i + 1);
-
-		if (obstacle_array[array_name])
-		{
-			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
-				// Draw each obstacle only if it's not already destroyed
-				if (obstacle_array[array_name][j]) obstacle_array[array_name][j]->draw();
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+			if (obstacles[i][j]) {
+				if (obstacles[i][j]->isAlive())
+				{
+					obstacles[i][j]->draw();
+				}
 			}
 		}
 	}
@@ -217,23 +198,12 @@ void LevelScreen::draw()
 
 void LevelScreen::init()
 {
-	// Map obstacle arrays
-	mapObstacles();
-
 	// Create obstacles
-	for (int i = 0; i < OBSTACLES_PER_ROW; i++)
-	{
-		obstacle_array1[i] = new Obstacle(game, float(i * 20) + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50, 20, 20);
-		setObstacles(obstacle_array1[i]);
-
-		obstacle_array2[i] = new Obstacle(game, float(i * 20) + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 - 20, 20, 20);
-		setObstacles(obstacle_array2[i]);
-
-		obstacle_array3[i] = new Obstacle(game, float(i * 20) + CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10, 20, 20);
-		setObstacles(obstacle_array3[i]);
-
-		obstacle_array4[i] = new Obstacle(game, float(i * 20) + CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40, 20, 20);
-		setObstacles(obstacle_array4[i]);
+	for (int i = 0; i < OBSTACLE_ROWS; i++) {
+		obstacles[i] = new Obstacle * [OBSTACLES_PER_ROW];
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+			obstacles[i][j] = new Obstacle(game, float(j * 20) + st[i][0], st[i][1], 20, 20);
+		}
 	}
 
 	// Initialize ball
@@ -270,14 +240,11 @@ LevelScreen::~LevelScreen()
 	}
 
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		array_name = "obstacle_array" + std::to_string(i + 1);
-
-		if (obstacle_array[array_name])
-		{
-			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
-				delete obstacle_array[array_name][i];
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
+			if (obstacles[i][j])
+			{
+				delete obstacles[i][j];
 			}
-			delete[] obstacle_array[array_name];
 		}
 	}
 
