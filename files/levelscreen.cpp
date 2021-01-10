@@ -101,8 +101,14 @@ void LevelScreen::update(status_t& status)
 			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
 				if (checkObstacleCollision(*obstacles[i][j]))
 				{
+					// Reduce obstacle's life
+					obstacles[i][j]->reduceLife();
+
 					// Remove collided obstacle
-					removeObstacle(*obstacles[i][j]);
+					if (obstacles[i][j]->getLife() == 0)
+					{
+						removeObstacle(*obstacles[i][j]);
+					}
 
 					// Re-direct ball
 					ball->init();

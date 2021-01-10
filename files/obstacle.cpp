@@ -32,6 +32,12 @@ void Obstacle::init()
 {
 }
 
+void Obstacle::reduceLife()
+{
+	if (life == 2) br.fill_opacity = 0.5f;
+	life = std::max<unsigned int>(0, life - 1);
+}
+
 bool Obstacle::isAlive()
 {
 	if (life == 0) return false;
