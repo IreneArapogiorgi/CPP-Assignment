@@ -82,12 +82,11 @@ void Ball::init()
 	direction_y /= length;
 }
 
-// Check collision between ball and objects
+// Check collision between ball and given objects
 int Ball::checkCollision(GameObject* objects[], int size)
 {
 	for (int i = 0; i < size; i++) {
 		if (objects[i] != nullptr) {
-
 			GameObject* temp;
 			temp = objects[i];
 

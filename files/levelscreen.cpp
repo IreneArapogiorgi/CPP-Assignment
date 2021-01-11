@@ -18,6 +18,14 @@ void LevelScreen::removeObstacle(Obstacle& obstacle)
 	}
 }
 
+void LevelScreen::initializeBall(graphics::scancode_t keyL, graphics::scancode_t keyR)
+{
+	if (graphics::getKeyState(keyL) || graphics::getKeyState(keyR))
+	{
+		ball_initialized = true;
+	}
+}
+
 void LevelScreen::update(status_t& status)
 {
 	if (playerA)
@@ -30,11 +38,15 @@ void LevelScreen::update(status_t& status)
 		playerB->update();
 	}
 
-	// Start ball movement when playerA begins playing
-	if (!ball_initialized && (graphics::getKeyState(playerA_keyL) || graphics::getKeyState(playerA_keyR)
-		|| graphics::getKeyState(playerB_keyL) || graphics::getKeyState(playerB_keyR)))
+	// Start ball movement
+	if (!ball_initialized)
 	{
-		ball_initialized = true;
+		if (loser == 0 && (graphics::getKeyState(playerA_keyL) || graphics::getKeyState(playerA_keyR)))
+		{
+			ball_initialized = true;
+		}
+		if (loser == 1) { initializeBall(playerA_keyL, playerA_keyR); }
+		if (loser == 2) { initializeBall(playerB_keyL, playerB_keyR); }
 	}
 
 	if (ball && ball_initialized)
@@ -83,6 +95,7 @@ void LevelScreen::update(status_t& status)
 	{
 		if (playerA && playerA->getLife() > 0)
 		{
+			loser = 1;
 			playerA->reduceLife();
 			ball->setPosX(playerA->getPosX());
 			ball->setPosY(CANVAS_HEIGHT - 65);
@@ -95,6 +108,7 @@ void LevelScreen::update(status_t& status)
 	{
 		if (playerB && playerB->getLife() > 0)
 		{
+			loser = 2;
 			playerB->reduceLife();
 			ball->setPosX(playerB->getPosX());
 			ball->setPosY(65);

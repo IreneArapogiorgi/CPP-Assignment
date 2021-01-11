@@ -25,7 +25,9 @@ class LevelScreen : public Screen
 	Ball* ball = nullptr;
 	bool ball_initialized = false;
 
+	int loser = 0;
 	void removeObstacle(Obstacle& obstacle);
+	void initializeBall(graphics::scancode_t keyL, graphics::scancode_t keyR);
 public:
 	void update(status_t& status) override;
 	void draw() override;
