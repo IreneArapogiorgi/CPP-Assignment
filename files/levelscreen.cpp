@@ -18,42 +18,6 @@ void LevelScreen::removeObstacle(Obstacle& obstacle)
 	}
 }
 
-bool LevelScreen::checkPlayerCollision(const Player& player)
-{
-	if (&player && ball)
-	{
-		Disk player_disk = player.getCollisionHull();
-		Disk ball_disk = ball->getCollisionHull();
-
-		float dx = player_disk.cx - ball_disk.cx;
-		float dy = player_disk.cy - ball_disk.cy;
-
-		if (sqrt(dx * dx + dy * dy) < player_disk.radius + ball_disk.radius)
-			return true;
-		else
-			return false;
-	}
-	return false;
-}
-
-int LevelScreen::checkObstacleCollision(const Obstacle& obstacle)
-{
-	if (&obstacle && ball)
-	{
-		Disk obstacle_disk = obstacle.getCollisionHull();
-		Disk ball_disk = ball->getCollisionHull();
-
-		float dx = obstacle_disk.cx - ball_disk.cx;
-		float dy = obstacle_disk.cy - ball_disk.cy;
-
-		if (sqrt(dx * dx + dy * dy) < obstacle_disk.radius + ball_disk.radius)
-			return true;
-		else
-			return false;
-	}
-	return false;
-}
-
 void LevelScreen::update(status_t& status)
 {
 	if (playerA)
@@ -78,43 +42,38 @@ void LevelScreen::update(status_t& status)
 		ball->update();
 	}
 
-	// Check collision between ball and playerA
-	if (playerA && checkPlayerCollision(*playerA))
+	// Check collision between ball and players
+	if (playerA && playerB)
 	{
-		// Re-direct ball
-		ball->init();
-		ball->update();
-	}
-
-	// Check collision between ball and playerB
-	if (playerB && checkPlayerCollision(*playerB))
-	{
-		// Re-direct ball
-		ball->init();
-		ball->update();
+		if (ball->checkCollision(players, 2) != -1)
+		{
+			// Re-direct ball
+			ball->init();
+			ball->update();
+		}
 	}
 
 	// Check collision between ball and obstacles
 	if (obstacles)
 	{
 		for (int i = 0; i < OBSTACLE_ROWS; i++) {
-			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
-				if (checkObstacleCollision(*obstacles[i][j]))
+			int index = ball->checkCollision(reinterpret_cast<GameObject**>(obstacles[i]), OBSTACLES_PER_ROW);
+
+			if (index != -1)
+			{
+				// Reduce obstacle's life
+				obstacles[i][index]->reduceLife();
+
+				// Remove collided obstacle
+				if (obstacles[i][index]->getLife() == 0)
 				{
-					// Reduce obstacle's life
-					obstacles[i][j]->reduceLife();
-
-					// Remove collided obstacle
-					if (obstacles[i][j]->getLife() == 0)
-					{
-						removeObstacle(*obstacles[i][j]);
-					}
-
-					// Re-direct ball
-					ball->init();
-					ball->update();
-					break;
+					removeObstacle(*obstacles[i][index]);
 				}
+
+				// Re-direct ball
+				ball->init();
+				ball->update();
+				break;
 			}
 		}
 	}
@@ -221,6 +180,9 @@ LevelScreen::LevelScreen(const Game& mygame) : Screen(mygame)
 	// Create players
 	playerA = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, playerA_keyL, playerA_keyR);
 	playerB = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, playerB_keyL, playerB_keyR);
+
+	players[0] = playerA;
+	players[1] = playerB;
 
 	// Create ball
 	ball = new Ball(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 65, 25, 25);

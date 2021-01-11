@@ -12,6 +12,8 @@ public:
 	virtual void update() = 0;
 	virtual void draw() = 0;
 	virtual void init() = 0;
+	float getWidth() { return width; }
+	float getHeight() { return height; }
 	float getPosX() { return pos_x; }
 	float getPosY() { return pos_y; }
 	void setPosX(float x) { pos_x = x; }

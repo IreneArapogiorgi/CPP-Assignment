@@ -14,6 +14,7 @@ class LevelScreen : public Screen
 	graphics::scancode_t playerB_keyL = graphics::SCANCODE_J;
 	graphics::scancode_t playerB_keyR = graphics::SCANCODE_L;
 
+	GameObject* players[2];
 	Player* playerA = nullptr;
 	Player* playerB = nullptr;
 
@@ -25,8 +26,6 @@ class LevelScreen : public Screen
 	bool ball_initialized = false;
 
 	void removeObstacle(Obstacle& obstacle);
-	bool checkPlayerCollision(const Player& player);
-	int checkObstacleCollision(const Obstacle& obstacle);
 public:
 	void update(status_t& status) override;
 	void draw() override;

@@ -3,6 +3,8 @@
 #include "game.h"
 #include "util.h"
 #include <random>
+#include <iostream>
+#include <algorithm>
 
 void Ball::update()
 {
@@ -28,23 +30,9 @@ void Ball::update()
 	}
 
 	if ((future_pos_y + radius) >= CANVAS_HEIGHT) {
-		/*math::vec2 dir{ direction_x, direction_y };
-		math::vec2 normal = { 0.0f, -1.0f };
-		math::vec2 reflection = math::reflect(dir, normal);
-		direction_x = reflection.x;
-		direction_y = reflection.y;
-		play_collision_sound = true;*/
-
 		ball_outofbounds = 2;
 	}
 	else if ((future_pos_y - radius) <= 0.0f) {
-		/*math::vec2 dir{ direction_x, direction_y };
-		math::vec2 normal = { 0.0f, 1.0f };
-		math::vec2 reflection = math::reflect(dir, normal);
-		direction_x = reflection.x;
-		direction_y = reflection.y;
-		play_collision_sound = true;*/
-
 		ball_outofbounds = 1;
 	}
 
@@ -92,6 +80,64 @@ void Ball::init()
 	float length = std::sqrt(direction_x * direction_x + direction_y * direction_y);
 	direction_x /= length;
 	direction_y /= length;
+}
+
+// Check collision between ball and objects
+int Ball::checkCollision(GameObject* objects[], int size)
+{
+	for (int i = 0; i < size; i++) {
+		if (objects[i] != nullptr) {
+
+			GameObject* temp;
+			temp = objects[i];
+
+			float w = temp->getWidth();
+			float h = temp->getHeight();
+			float deltaX = pos_x - std::max(temp->getPosX() - width / 2, std::min(pos_x, temp->getPosX() + width / 2));
+			float deltaY = pos_y - std::max(temp->getPosY() - height / 2, std::min(pos_y, temp->getPosY() + height / 2));
+
+			if ((deltaX * deltaX + deltaY * deltaY) < (height * height / 4)) {
+				if (!(deltaX == 0 || deltaY == 0)) {
+					int t = 1;
+					if (deltaX * deltaX > deltaY * deltaY) {
+						if (deltaX < 0) {
+							deltaX *= -1;
+						}
+						if (speedY < 0) {
+							t = -1;
+						}
+						speedX -= sqrt(deltaX) * speedX;
+						reflectX();
+						speedY = t * sqrt(pow(speed, 2) - pow(speedX, 2));
+					}
+					else if (deltaX * deltaX < deltaY * deltaY) {
+						if (deltaY < 0) {
+							deltaY *= -1;
+						}
+						if (speedX < 0) {
+							t = -1;
+						}
+						speedY -= sqrt(deltaY) * speedY;
+						reflectY();
+						speedX = t * sqrt(pow(speed, 2) - pow(speedY, 2));
+					}
+					else {
+						reflectX();
+						reflectY();
+					}
+					return i;
+				}
+				if (deltaY == 0) {
+					reflectX();
+				}
+				else {
+					reflectY();
+				}
+				return i;
+			}
+		}
+	}
+	return -1;
 }
 
 Disk Ball::getCollisionHull() const
