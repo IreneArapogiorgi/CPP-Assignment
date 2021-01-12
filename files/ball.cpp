@@ -7,8 +7,6 @@
 #include <iostream>
 #include <algorithm>
 
-#define PI 3.14159265
-
 void Ball::update()
 {
 	float future_pos_x = pos_x + direction_x * speed;

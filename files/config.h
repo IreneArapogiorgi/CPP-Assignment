@@ -11,3 +11,4 @@
 #define INFOTEXT_SIZE 30
 #define INFOTEXT_POSX 30
 #define INFOTEXT_POSY 40
+#define PI 3.14159265f
