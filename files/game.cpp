@@ -13,8 +13,7 @@ void Game::update()
 			break;
 		case STATUS_END:
 			endscreen->update();
-			//levelscreen->~LevelScreen();
-			//delete levelscreen;
+			delete levelscreen;
 
 			// Start new game
 			this->init();
