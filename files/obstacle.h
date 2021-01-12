@@ -3,6 +3,7 @@
 
 class Obstacle : public GameObject, public Collidable
 {
+	float l = 1;
 	unsigned int life = 2;
 public:
 	void update() override;

@@ -30,16 +30,17 @@ void Obstacle::draw()
 
 void Obstacle::init()
 {
+	l = 1.0 / life;
 }
 
 void Obstacle::reduceLife()
 {
-	if (life == 2) br.fill_opacity = 0.5f;
 	life = std::max<unsigned int>(0, life - 1);
 }
 
 bool Obstacle::isAlive()
 {
+	br.fill_opacity = l * life;
 	if (life == 0) return false;
 	return true;
 }

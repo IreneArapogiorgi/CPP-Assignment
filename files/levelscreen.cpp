@@ -182,6 +182,7 @@ void LevelScreen::init()
 		obstacles[i] = new Obstacle * [OBSTACLES_PER_ROW];
 		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
 			obstacles[i][j] = new Obstacle(game, float(j * 20) + st[i][0], st[i][1], 20, 20);
+			obstacles[i][j]->init();
 		}
 	}
 
