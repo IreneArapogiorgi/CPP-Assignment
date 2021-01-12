@@ -4,7 +4,6 @@
 #include "config.h"
 #include "player.h"
 #include "ball.h"
-#include <map>
 
 class LevelScreen : public Screen
 {
@@ -19,15 +18,13 @@ class LevelScreen : public Screen
 	Player* playerB = nullptr;
 
 	Obstacle*** obstacles = new Obstacle * *[OBSTACLE_ROWS];
+
+	// Position of each series of obstacles
 	float st[4][2] = { {CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50}, {CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 - 20}, 
 					   {CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10}, {CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40} };
 
 	Ball* ball = nullptr;
-	bool ball_initialized = false;
-
-	int loser = 0;
 	void removeObstacle(Obstacle& obstacle);
-	void initializeBall(graphics::scancode_t keyL, graphics::scancode_t keyR);
 public:
 	void update() override;
 	void draw() override;

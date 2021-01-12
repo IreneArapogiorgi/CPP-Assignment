@@ -10,6 +10,7 @@ public:
 	void update() override;
 	void draw() override;
 	void init() override;
+	void startingPos();
 	void reduceLife() { life = std::max<unsigned int>(0, life - 1); }
 	unsigned int getLife() const { return life; }
 	const float getSpeed() const { return speed; }

@@ -45,6 +45,11 @@ void Player::init()
 {
 }
 
+void Player::startingPos()
+{
+	pos_x = CANVAS_WIDTH / 2;
+}
+
 Disk Player::getCollisionHull() const
 {
 	Disk disk;
