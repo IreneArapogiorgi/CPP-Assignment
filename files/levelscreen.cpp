@@ -26,7 +26,7 @@ void LevelScreen::initializeBall(graphics::scancode_t keyL, graphics::scancode_t
 	}
 }
 
-void LevelScreen::update(status_t& status)
+void LevelScreen::update()
 {
 	if (playerA)
 	{

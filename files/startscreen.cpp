@@ -4,7 +4,7 @@
 #include "util.h"
 #include "game.h"
 
-void StartScreen::update(status_t& status)
+void StartScreen::update()
 {
 	// Start game if Enter is pressed
 	if (graphics::getKeyState(graphics::SCANCODE_RETURN))

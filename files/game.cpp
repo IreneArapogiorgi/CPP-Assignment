@@ -1,39 +1,39 @@
 #include "game.h"
 
+status_t Screen::status{STATUS_START};
+
 void Game::update()
 {
-	if (status == STATUS_START)
-	{
-		startscreen->update(status);
-	}
-	else if (status == STATUS_LEVEL)
-	{
-		levelscreen->update(status);
-	}
-	else
-	{
-		endscreen->update(status);
-		//levelscreen->~LevelScreen();
-		//delete levelscreen;
+	switch (startscreen->getStatus()) {
+		case STATUS_START:
+			startscreen->update();
+			break;
+		case STATUS_LEVEL:
+			levelscreen->update();
+			break;
+		case STATUS_END:
+			endscreen->update();
+			//levelscreen->~LevelScreen();
+			//delete levelscreen;
 
-		// Start new game
-		this->init();
+			// Start new game
+			this->init();
+			break;
 	}
 }
 
 void Game::draw()
 {
-	if (status == STATUS_START)
-	{
-		startscreen->draw();
-	}
-	else if (status == STATUS_LEVEL)
-	{
-		levelscreen->draw();
-	}
-	else
-	{
-		endscreen->draw();
+	switch (startscreen->getStatus()) {
+		case STATUS_START:
+			startscreen->draw();
+			break;
+		case STATUS_LEVEL:
+			levelscreen->draw();
+			break;
+		case STATUS_END:
+			endscreen->draw();
+			break;
 	}
 }
 
@@ -48,7 +48,7 @@ Game::Game()
 {
 	// Create start screen
 	startscreen = new StartScreen(*this);
-	status = STATUS_START;
+	startscreen->setStatus(STATUS_START);
 }
 
 Game::~Game()

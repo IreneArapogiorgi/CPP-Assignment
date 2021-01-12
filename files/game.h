@@ -6,7 +6,6 @@
 class Game
 {
 	bool debug_mode = false;
-	status_t status;
 
 	StartScreen* startscreen = nullptr;
 	LevelScreen* levelscreen = nullptr;

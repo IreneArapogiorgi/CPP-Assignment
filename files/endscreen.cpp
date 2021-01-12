@@ -3,7 +3,7 @@
 #include "config.h"
 #include "util.h"
 
-void EndScreen::update(status_t& status)
+void EndScreen::update()
 {
 	// Go to start screen if Enter is pressed
 	if (graphics::getKeyState(graphics::SCANCODE_RETURN))

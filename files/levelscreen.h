@@ -29,7 +29,7 @@ class LevelScreen : public Screen
 	void removeObstacle(Obstacle& obstacle);
 	void initializeBall(graphics::scancode_t keyL, graphics::scancode_t keyR);
 public:
-	void update(status_t& status) override;
+	void update() override;
 	void draw() override;
 	void init() override;
 	LevelScreen(const class Game& mygame);
