@@ -9,7 +9,7 @@
 
 void Ball::update()
 {
-	bool play_collision_sound = false;
+	bool play_sound = false;
 
 	if (flag == true) {
 		if (pos_x >= CANVAS_WIDTH || pos_x <= 0) {
@@ -20,13 +20,13 @@ void Ball::update()
 				pos_x = CANVAS_WIDTH - width / 2 - 0.1;
 			}
 			reflectX();
-			play_collision_sound = true;
+			play_sound = true;
 		}
 		pos_x += speedX;
 		pos_y += speedY;
 	}
 
-	if (play_collision_sound) {
+	if (play_sound) {
 		std::string wav = std::string(ASSET_PATH) + "ball_sound.wav";
 		graphics::playSound(wav, 1.0f);
 	}

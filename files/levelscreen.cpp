@@ -38,6 +38,10 @@ void LevelScreen::update()
 
 			if (index != -1)
 			{
+				// Play collision sound
+				std::string wav = std::string(ASSET_PATH) + "collision_sound.wav";
+				graphics::playSound(wav, 1.0f);
+
 				// Reduce obstacle's life
 				obstacles[i][index]->reduceLife();
 
