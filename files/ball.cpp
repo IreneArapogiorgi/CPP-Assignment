@@ -2,9 +2,12 @@
 #include "ball.h"
 #include "game.h"
 #include "util.h"
+#include "math.h"
 #include <random>
 #include <iostream>
 #include <algorithm>
+
+#define PI 3.14159265
 
 void Ball::update()
 {
@@ -85,9 +88,10 @@ void Ball::init()
 // Check collision between ball and given objects
 int Ball::checkCollision(GameObject* objects[], int size)
 {
+	GameObject* temp;
+
 	for (int i = 0; i < size; i++) {
 		if (objects[i] != nullptr) {
-			GameObject* temp;
 			temp = objects[i];
 
 			float w = temp->getWidth();
@@ -96,41 +100,61 @@ int Ball::checkCollision(GameObject* objects[], int size)
 			float deltaY = pos_y - std::max(temp->getPosY() - height / 2, std::min(pos_y, temp->getPosY() + height / 2));
 
 			if ((deltaX * deltaX + deltaY * deltaY) < (height * height / 4)) {
-				if (!(deltaX == 0 || deltaY == 0)) {
-					int t = 1;
-					if (deltaX * deltaX > deltaY * deltaY) {
-						if (deltaX < 0) {
-							deltaX *= -1;
-						}
-						if (speedY < 0) {
-							t = -1;
-						}
-						speedX -= sqrt(deltaX) * speedX;
-						reflectX();
-						speedY = t * sqrt(pow(speed, 2) - pow(speedX, 2));
-					}
-					else if (deltaX * deltaX < deltaY * deltaY) {
-						if (deltaY < 0) {
-							deltaY *= -1;
-						}
-						if (speedX < 0) {
-							t = -1;
-						}
-						speedY -= sqrt(deltaY) * speedY;
+				float Cos;
+
+				if (deltaX == 0 && deltaY == 0) {
+					reflectX();
+					reflectY();
+				}
+				else if (!(deltaX == 0 || deltaY == 0)) {
+					int yp = 1;
+					int xp = 1;
+
+					if (speedX < 0) xp = -1;
+					if (speedY < 0) yp = -1;
+
+					Cos = deltaY / (sqrt(deltaX * deltaX) + sqrt(deltaY * deltaY));
+
+					if (Cos < 0) Cos *= -1;
+
+					speedX = speed * Cos * xp;
+					speedY = sqrt(pow(speed, 2) - pow(speedX, 2)) * yp;
+
+					if (Cos < cos(PI / 4)) {
 						reflectY();
-						speedX = t * sqrt(pow(speed, 2) - pow(speedY, 2));
 					}
 					else {
 						reflectX();
-						reflectY();
 					}
-					return i;
 				}
-				if (deltaY == 0) {
+				else if (deltaY == 0) {
 					reflectX();
 				}
 				else {
 					reflectY();
+				}
+
+				float disx;
+				float disy;
+
+				disx = temp->getPosX() - pos_x;
+				disy = temp->getPosY() - pos_y;
+
+				if (disx < 0) disx *= -1;
+				if (disy < 0) disy *= -1;
+
+				if (disx < w / 2 + width / 2 && disy < h / 2 + height / 2) {
+					disx -= w / 2 + width / 2;
+					disy -= h / 2 + height / 2;
+
+					if (disx < disy) {
+						if (temp->getPosY() < pos_y) disy *= -1;
+						pos_y += disy;
+					}
+					else {
+						if (temp->getPosX() < pos_x) disx *= -1;
+						pos_x += disx;
+					}
 				}
 				return i;
 			}
