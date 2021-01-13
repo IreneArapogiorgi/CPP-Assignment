@@ -11,14 +11,6 @@ void StartScreen::update()
 	{
 		status = STATUS_LEVEL;
 	}
-
-	/* Start game if mouse is pressed
-	graphics::MouseState ms;
-	graphics::getMouseState(ms);
-	if (ms.button_left_pressed)
-	{
-		status = STATUS_LEVEL;
-	}*/
 }
 
 void StartScreen::draw()

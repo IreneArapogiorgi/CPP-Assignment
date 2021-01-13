@@ -5,19 +5,11 @@
 
 void EndScreen::update()
 {
-	// Go to start screen if Enter is pressed
+	// Start new game if Enter is pressed
 	if (graphics::getKeyState(graphics::SCANCODE_RETURN))
 	{
-		status = STATUS_START;
+		status = STATUS_LEVEL;
 	}
-
-	/* Go to start screen if mouse is pressed
-	graphics::MouseState ms;
-	graphics::getMouseState(ms);
-	if (ms.button_left_pressed)
-	{
-		status = STATUS_START;
-	}*/
 }
 
 void EndScreen::draw()

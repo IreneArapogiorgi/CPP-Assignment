@@ -14,6 +14,7 @@ void Game::update()
 		case STATUS_END:
 			endscreen->update();
 			delete levelscreen;
+			delete endscreen;
 
 			// Start new game
 			this->init();
