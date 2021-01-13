@@ -40,7 +40,7 @@ void LevelScreen::update()
 			{
 				// Play collision sound
 				std::string wav = std::string(ASSET_PATH) + "collision_sound.wav";
-				graphics::playSound(wav, 1.0f);
+				graphics::playSound(wav, 0.2f);
 
 				// Reduce obstacle's life
 				obstacles[i][index]->reduceLife();
@@ -72,7 +72,7 @@ void LevelScreen::update()
 		if (playerB && playerB->getLife() > 0)
 		{
 			playerB->reduceLife();
-			ball->setPosX(playerB->getPosX());
+			ball->setPosX(CANVAS_WIDTH / 2);
 			ball->setPosY(65);
 			ball->setKeys(playerB_keyL, playerB_keyR);
 		}
@@ -83,7 +83,7 @@ void LevelScreen::update()
 		if (playerA && playerA->getLife() > 0)
 		{
 			playerA->reduceLife();
-			ball->setPosX(playerA->getPosX());
+			ball->setPosX(CANVAS_WIDTH / 2);
 			ball->setPosY(CANVAS_HEIGHT - 65);
 			ball->setKeys(playerA_keyL, playerA_keyR);
 		}
