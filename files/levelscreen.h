@@ -24,7 +24,6 @@ class LevelScreen : public Screen
 					   {CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10}, {CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40} };
 
 	Ball* ball = nullptr;
-	void removeObstacle(Obstacle& obstacle);
 public:
 	void update() override;
 	void draw() override;

@@ -4,20 +4,6 @@
 #include "util.h"
 #include <ctime>
 
-// Remove obstacle after collision
-void LevelScreen::removeObstacle(Obstacle& obstacle)
-{
-	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
-			if (&(*obstacles[i][j]) == &obstacle) {
-				delete& (*obstacles[i][j]);
-				obstacles[i][j] = nullptr;
-				break;
-			}
-		}
-	}
-}
-
 void LevelScreen::update()
 {
 	if (playerA)
@@ -31,6 +17,7 @@ void LevelScreen::update()
 	}
 
 	if (ball && ball->respawn()) {
+		ball->update();
 
 		// Check collision between ball and obstacles
 		for (int i = 0; i < OBSTACLE_ROWS; i++) {
@@ -48,12 +35,12 @@ void LevelScreen::update()
 				// Remove collided obstacle
 				if (obstacles[i][index]->getLife() == 0)
 				{
-					removeObstacle(*obstacles[i][index]);
+					delete obstacles[i][index];
+					obstacles[i][index] = nullptr;
 				}
 				break;
 			}
 		}
-		ball->update();
 
 		// Check collision between ball and players
 		ball->checkCollision(players, 2);
@@ -186,6 +173,7 @@ LevelScreen::LevelScreen(const Game& mygame) : Screen(mygame)
 
 LevelScreen::~LevelScreen()
 {
+	// Delete players
 	if (playerA)
 	{
 		delete playerA;
@@ -196,11 +184,13 @@ LevelScreen::~LevelScreen()
 		delete playerB;
 	}
 
+	// Delete ball
 	if (ball)
 	{
 		delete ball;
 	}
 
+	// Delete obstacles
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {
 		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
 			if (obstacles[i][j])
