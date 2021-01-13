@@ -132,11 +132,23 @@ int Ball::checkCollision(GameObject* objects[], int size)
 					speedX = speed * Cos * xp;
 					speedY = sqrt(pow(speed, 2) - pow(speedX, 2)) * yp;
 
-					if (Cos < cos(PI / 4)) {
-						reflectY();
+					if (deltaX * speedX < 0 && deltaY * speedY < 0) {
+						if (Cos < cos(PI / 4)) {
+							reflectY();
+						}
+						else {
+							reflectX();
+						}
 					}
 					else {
-						reflectX();
+						if (Cos > cos(PI / 4)) {
+							if (deltaX * speedX < 0) {
+								reflectX();
+							}
+							else {
+								reflectY();
+							}
+						}
 					}
 				}
 				else if (deltaY == 0) {
