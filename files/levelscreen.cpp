@@ -6,17 +6,10 @@
 
 void LevelScreen::update()
 {
-	if (playerA)
-	{
-		playerA->update();
-	}
-
-	if (playerB)
-	{
-		playerB->update();
-	}
-
 	if (ball && ball->respawn()) {
+		if (playerA) playerA->update();
+		if (playerB) playerB->update();
+
 		ball->update();
 
 		// Check collision between ball and obstacles
