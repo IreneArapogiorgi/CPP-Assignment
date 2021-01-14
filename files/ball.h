@@ -1,7 +1,7 @@
 #pragma once
 #include "gameobject.h"
 
-class Ball : public GameObject, public Collidable
+class Ball : public GameObject
 {
 	graphics::scancode_t keyLeft, keyRight;
 	const float speed = 2.0f;
@@ -22,6 +22,5 @@ public:
 	int outOfbounds();
 	int checkCollision(GameObject* objects[], int size);
 	void setKeys(graphics::scancode_t keyLeft, graphics::scancode_t keyRight);
-	Disk getCollisionHull() const override;
 	Ball(const class Game& mygame, float pos_x, float pos_y, float width, float height);
 };

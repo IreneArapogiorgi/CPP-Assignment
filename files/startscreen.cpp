@@ -1,7 +1,6 @@
 #include "startscreen.h"
 #include "graphics.h"
 #include "config.h"
-#include "util.h"
 #include "game.h"
 
 void StartScreen::update()

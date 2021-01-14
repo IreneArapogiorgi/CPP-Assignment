@@ -1,7 +1,6 @@
 #include "endscreen.h"
 #include "graphics.h"
 #include "config.h"
-#include "util.h"
 
 void EndScreen::update()
 {

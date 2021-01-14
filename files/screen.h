@@ -1,12 +1,13 @@
 #pragma once
 #include "graphics.h"
-#include "util.h"
+
+typedef enum { STATUS_START, STATUS_LEVEL, STATUS_END } status_t;
 
 class Screen
 {
 protected:
-	const class Game& game;
 	static status_t status;
+	const class Game& game;
 	unsigned int loser = 0;
 	graphics::Brush br;
 public:

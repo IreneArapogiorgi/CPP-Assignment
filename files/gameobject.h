@@ -1,6 +1,5 @@
 #pragma once
 #include "graphics.h"
-#include "util.h"
 
 class GameObject
 {
@@ -20,10 +19,4 @@ public:
 	void setPosY(float y) { pos_y = y; }
 	GameObject(const class Game& mygame, float pos_x, float pos_y, float width, float height);
 	~GameObject();
-};
-
-class Collidable
-{
-public:
-	virtual Disk getCollisionHull() const = 0;
 };

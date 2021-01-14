@@ -1,7 +1,7 @@
 #pragma once
 #include "gameobject.h"
 
-class Player : public GameObject, public Collidable
+class Player : public GameObject
 {
 	graphics::scancode_t keyLeft, keyRight;
 	const float speed = 10.0f;
@@ -14,6 +14,5 @@ public:
 	void reduceLife() { life = std::max<unsigned int>(0, life - 1); }
 	unsigned int getLife() const { return life; }
 	const float getSpeed() const { return speed; }
-	Disk getCollisionHull() const override;
 	Player(const class Game& mygame, float pos_x, float pos_y, float width, float height, graphics::scancode_t keyLeft, graphics::scancode_t keyRight);
 };
