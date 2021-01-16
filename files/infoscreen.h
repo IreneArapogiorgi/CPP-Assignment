@@ -1,11 +1,11 @@
 #pragma once
 #include "screen.h"
 
-class StartScreen : public Screen
+class InfoScreen : public Screen
 {
 public:
 	void update() override;
 	void draw() override;
 	void init() override;
-	StartScreen(const class Game& mygame);
+	InfoScreen(const class Game& mygame);
 };

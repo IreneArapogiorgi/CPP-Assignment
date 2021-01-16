@@ -7,6 +7,7 @@ void Game::update()
 	switch (startscreen->getStatus()) {
 		case STATUS_START:
 			startscreen->update();
+			if (!startscreen->onCharge()) { delete startscreen; }
 			break;
 
 		case STATUS_MENU:
@@ -20,6 +21,11 @@ void Game::update()
 			}
 			break;
 
+		case STATUS_INFO:
+			infoscreen->update();
+			if (!infoscreen->onCharge()) { delete infoscreen; }
+			break;
+
 		case STATUS_LEVEL:
 			levelscreen->update();
 			endscreen->setWinner(levelscreen->getWinner());
@@ -28,7 +34,6 @@ void Game::update()
 		case STATUS_END:
 			endscreen->update();
 			if (!endscreen->onCharge()) {
-				delete startscreen;
 				delete levelscreen;
 				delete endscreen;
 
@@ -38,13 +43,12 @@ void Game::update()
 			break;
 
 		case STATUS_ESCAPE:
-			delete startscreen;
 			delete levelscreen;
 			delete endscreen;
 
 			// Start new game
 			this->init();
-			startscreen->setStatus(STATUS_MENU);
+			menuscreen->setStatus(STATUS_MENU);
 	}
 }
 
@@ -56,6 +60,9 @@ void Game::draw()
 			break;
 		case STATUS_MENU:
 			menuscreen->draw();
+			break;
+		case STATUS_INFO:
+			infoscreen->draw();
 			break;
 		case STATUS_LEVEL:
 			levelscreen->draw();
@@ -71,6 +78,7 @@ void Game::init()
 	// Create screens
 	startscreen = new StartScreen(*this);
 	menuscreen = new MenuScreen(*this);
+	infoscreen = new InfoScreen(*this);
 	levelscreen = new LevelScreen(*this);
 	endscreen = new EndScreen(*this);
 }
@@ -81,8 +89,4 @@ Game::Game()
 
 Game::~Game()
 {
-	/*delete startscreen;
-	delete menuscreen;
-	delete levelscreen;
-	delete endscreen;*/
 }

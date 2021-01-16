@@ -1,7 +1,7 @@
 #pragma once
 #include "graphics.h"
 
-typedef enum { STATUS_START, STATUS_MENU, STATUS_LEVEL, STATUS_END, STATUS_ESCAPE } status_t;
+typedef enum { STATUS_START, STATUS_MENU, STATUS_INFO, STATUS_LEVEL, STATUS_END, STATUS_ESCAPE } status_t;
 
 class Screen
 {

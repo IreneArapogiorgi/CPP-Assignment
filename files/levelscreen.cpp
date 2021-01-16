@@ -97,11 +97,11 @@ void LevelScreen::update()
 	{
 		if (playerA->getLife() == 0) {
 
-			winner = '2';
+			winner = '1';
 			status = STATUS_END;
 		}
 		else if (playerB->getLife() == 0) {
-			winner = '1';
+			winner = '2';
 			status = STATUS_END;
 		}
 	}

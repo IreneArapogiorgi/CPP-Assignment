@@ -5,8 +5,11 @@
 
 void StartScreen::update()
 {
-	// Start game if Enter is pressed
-	if (graphics::getKeyState(graphics::SCANCODE_RETURN))
+	// Show text
+	br.fill_opacity += 0.003f;
+
+	// Proceed to menu after approximately 4 seconds
+	if (graphics::getGlobalTime() > 4000)
 	{
 		status = STATUS_MENU;
 	}
@@ -20,26 +23,9 @@ void StartScreen::draw()
 	br.fill_color[2] = 1.0f;
 	graphics::setFont(std::string(ASSET_PATH) + "screen_font.ttf");
 
-	char startgame[23];
-	sprintf_s(startgame, "PRESS ENTER TO PROCEED");
-	graphics::drawText(CANVAS_WIDTH / 4.3f, STARTSCREEN_HEIGHT * 3, 50, startgame, br);
-
-	// Change color of text
-	brush(0.7, 0);
-	brush(0.7, 1);
-	brush(0.7, 2);
-
-	std::string str = "PLAYER  1  MOVES  WITH  A  AND  D";
-	graphics::drawText(STARTSCREEN_WIDTH + 40, STARTSCREEN_HEIGHT * 5.2, 20, str, br);
-
-	str = "PLAYER  2  MOVES  WITH  J  AND  L";
-	graphics::drawText(STARTSCREEN_WIDTH + 40, STARTSCREEN_HEIGHT * 6.2, 20, str, br);
-
-	str = "PRESS  SPACE  TO  THROW  THE  BALL";
-	graphics::drawText(STARTSCREEN_WIDTH + 30, STARTSCREEN_HEIGHT * 7.2, 20, str, br);
-
-	str = "PRESS  Q  TO  RETURN  TO  THE  MENU";
-	graphics::drawText(STARTSCREEN_WIDTH + 30, STARTSCREEN_HEIGHT * 8.2, 20, str, br);
+	char startgame[28];
+	sprintf_s(startgame, "WELCOME  TO  GHOST  HUNTING");
+	graphics::drawText(CANVAS_WIDTH / 5, CANVAS_HEIGHT / 2, 50, startgame, br);
 }
 
 void StartScreen::init()
@@ -49,4 +35,5 @@ void StartScreen::init()
 StartScreen::StartScreen(const Game& mygame) : Screen(mygame)
 {
 	self = STATUS_START;
+	br.fill_opacity = 0.0f;
 }

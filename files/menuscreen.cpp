@@ -12,7 +12,7 @@ void MenuScreen::update()
 		if (mouse.cur_pos_y * RATEH >= MENUSCREEN_HEIGHT * (i + 2.5) - 25 && mouse.cur_pos_y * RATEH <= MENUSCREEN_HEIGHT * (i + 2.5) + 5) {
 			if (mouse.cur_pos_x * RATEW >= MENUSCREEN_WIDTH - 60 && mouse.cur_pos_x * RATEW <= MENUSCREEN_WIDTH - 60 + 100) {
 				if (mouse.button_left_pressed) {
-					status = STATUS_LEVEL;
+					status = STATUS_INFO;
 				}
 				bPoint = i;
 			}
