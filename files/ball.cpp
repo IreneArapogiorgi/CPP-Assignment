@@ -121,8 +121,8 @@ int Ball::checkCollision(GameObject* objects[], int size)
 
 			float w = temp->getWidth();
 			float h = temp->getHeight();
-			float deltaX = pos_x - std::max(temp->getPosX() - width / 2, std::min(pos_x, temp->getPosX() + width / 2));
-			float deltaY = pos_y - std::max(temp->getPosY() - height / 2, std::min(pos_y, temp->getPosY() + height / 2));
+			float deltaX = pos_x - std::max(temp->getPosX() - w / 2, std::min(pos_x, temp->getPosX() + w / 2));
+			float deltaY = pos_y - std::max(temp->getPosY() - h / 2, std::min(pos_y, temp->getPosY() + h / 2));
 
 			if ((deltaX * deltaX + deltaY * deltaY) < (height * height / 4)) {
 				float Cos;
