@@ -4,13 +4,12 @@
 class Obstacle : public GameObject
 {
 	float l = 1;
-	unsigned int life = 2;
+	int life;
 public:
 	void update() override;
-	void draw() override;
 	void init() override;
-	void reduceLife();
+	void reduceLife() { life = std::max<int>(0, life - 1); }
 	bool isAlive();
-	unsigned int getLife() const { return life; }
-	Obstacle(const class Game& mygame, float pos_x, float pos_y, float width, float height);
+	int getLife() const { return life; }
+	Obstacle(const class Game& mygame, float pos_x, float pos_y, float width, float height, int life);
 };

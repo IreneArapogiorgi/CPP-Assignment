@@ -8,6 +8,28 @@
 
 void Ball::update()
 {
+	int u = 1;
+	if (speedX > -0.1 && speedX < 0.1) {
+		speedX *= 2;
+		if (speedX == 0) {
+			std::default_random_engine generator;
+			std::uniform_real_distribution<> distribution(-0.1, 0.1);
+			speedX = distribution(generator);
+		}
+		if (speedY < 0) u = -1;
+		speedY = sqrt(pow(speed, 2) - pow(speedX, 2)) * u;
+	}
+	else if (speedY > -0.1 && speedY < 0.1) {
+		speedY *= 2;
+		if (speedY == 0) {
+			std::default_random_engine generator;
+			std::uniform_real_distribution<> distribution(-0.1, 0.1);
+			speedY = distribution(generator);
+		}
+		if (speedX < 0) u = -1;
+		speedX = sqrt(pow(speed, 2) - pow(speedY, 2)) * u;
+	}
+
 	bool play_sound = false;
 
 	if (flag == true) {
@@ -33,10 +55,17 @@ void Ball::update()
 
 void Ball::draw()
 {
-	// Draw ball
-	br.texture = std::string(ASSET_PATH) + "ball.png";
-	br.outline_opacity = 0.0f;
-	graphics::drawRect(pos_x, pos_y, width, height, br);
+	// Add fade effect when ball is moving
+	if (flag)
+	{
+		br.fill_opacity = 0.2;
+		drawRect(pos_x + (speedX * -4), pos_y + (speedY * -4), width, height, br);
+		br.fill_opacity = 0.3;
+		drawRect(pos_x + (speedX * -2), pos_y + (speedY * -2), width, height, br);
+	}
+
+	br.fill_opacity = 1.0;
+	drawRect(pos_x, pos_y, width, height, br);
 }
 
 void Ball::init()
@@ -49,19 +78,20 @@ void Ball::start()
 	{
 		speedX -= graphics::getDeltaTime() / 1000;
 		if (speedX <= -speed) { speedX = -speed + 0.1; }
-		flag = true;
-
 	}
 
 	if (graphics::getKeyState(keyRight))
 	{
 		speedX += graphics::getDeltaTime() / 1000;
 		if (speedX >= speed) { speedX = speed - 0.1; }
-		flag = true;
 	}
 
 	speedY = sqrt(pow(speed, 2) - pow(speedX, 2));
 	if (pos_y > 100) reflectY();
+
+	if (graphics::getKeyState(graphics::SCANCODE_SPACE)) {
+		flag = true;
+	}
 }
 
 int Ball::outOfbounds()
@@ -180,4 +210,7 @@ void Ball::setKeys(graphics::scancode_t keyLeft, graphics::scancode_t keyRight)
 
 Ball::Ball(const Game& mygame, float pos_x, float pos_y, float width, float height) : GameObject(mygame, pos_x, pos_y, width, height)
 {
+	// Draw ball
+	br.texture = std::string(ASSET_PATH) + "ball.png";
+	br.outline_opacity = 0.0f;
 }

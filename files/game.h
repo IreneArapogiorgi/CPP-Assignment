@@ -1,11 +1,13 @@
 #pragma once
 #include "startscreen.h"
 #include "levelscreen.h"
+#include "menuscreen.h"
 #include "endscreen.h"
 
 class Game
 {
 	StartScreen* startscreen = nullptr;
+	MenuScreen* menuscreen = nullptr;
 	LevelScreen* levelscreen = nullptr;
 	EndScreen* endscreen = nullptr;
 public:

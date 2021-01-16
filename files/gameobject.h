@@ -8,8 +8,8 @@ protected:
 	float pos_x, pos_y, width, height;
 	graphics::Brush br;
 public:
+	virtual void draw();
 	virtual void update() = 0;
-	virtual void draw() = 0;
 	virtual void init() = 0;
 	float getWidth() { return width; }
 	float getHeight() { return height; }
