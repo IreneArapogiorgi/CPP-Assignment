@@ -29,7 +29,7 @@ void MenuScreen::update()
 		}
 	}
 
-	if (mouse.cur_pos_y * RATEH >= MENUSCREEN_HEIGHT * 9.1 - 25 && mouse.cur_pos_y * RATEH <= MENUSCREEN_HEIGHT * 9.1 + 5) {
+	if (mouse.cur_pos_y * RATEH >= MENUSCREEN_HEIGHT * 9 - 25 && mouse.cur_pos_y * RATEH <= MENUSCREEN_HEIGHT * 9 + 5) {
 		if (mouse.cur_pos_x * RATEW >= CANVAS_WIDTH / 3 && mouse.cur_pos_x * RATEW <= CANVAS_WIDTH / 3 + 315) {
 			if (mouse.button_left_pressed) {
 				AI = !AI;
@@ -120,7 +120,7 @@ void MenuScreen::draw()
 	}
 
 	str = "PLAY AGAINST COMPUTER";
-	graphics::drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 9.2, 30, str, br);
+	graphics::drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 9, 30, str, br);
 
 	if (AI) {
 		brush(1, 0);

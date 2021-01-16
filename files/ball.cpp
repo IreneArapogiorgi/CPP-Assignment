@@ -76,22 +76,20 @@ void Ball::start()
 {
 	if (graphics::getKeyState(keyLeft))
 	{
+		flag = true;
 		speedX -= graphics::getDeltaTime() / 1000;
 		if (speedX <= -speed) { speedX = -speed + 0.1; }
 	}
 
 	if (graphics::getKeyState(keyRight))
 	{
+		flag = true;
 		speedX += graphics::getDeltaTime() / 1000;
 		if (speedX >= speed) { speedX = speed - 0.1; }
 	}
 
 	speedY = sqrt(pow(speed, 2) - pow(speedX, 2));
 	if (pos_y > 100) reflectY();
-
-	if (graphics::getKeyState(graphics::SCANCODE_SPACE)) {
-		flag = true;
-	}
 }
 
 int Ball::outOfbounds()
