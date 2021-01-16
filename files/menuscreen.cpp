@@ -6,11 +6,14 @@
 void MenuScreen::update()
 {
 	graphics::getMouseState(mouse);
+	float pos_x = graphics::windowToCanvasX(mouse.cur_pos_x);
+	float pos_y = graphics::windowToCanvasY(mouse.cur_pos_y);
+
 	bPoint = 0;
 
 	for (int i = 1; i < 4; i++) {
-		if (mouse.cur_pos_y * RATEH >= MENUSCREEN_HEIGHT * (i + 2.5) - 25 && mouse.cur_pos_y * RATEH <= MENUSCREEN_HEIGHT * (i + 2.5) + 5) {
-			if (mouse.cur_pos_x * RATEW >= MENUSCREEN_WIDTH - 60 && mouse.cur_pos_x * RATEW <= MENUSCREEN_WIDTH - 60 + 100) {
+		if (pos_y >= MENUSCREEN_HEIGHT * (i + 2.5) - 25 && pos_y <= MENUSCREEN_HEIGHT * (i + 2.5) + 5) {
+			if (pos_x >= MENUSCREEN_WIDTH - 60 && pos_x <= MENUSCREEN_WIDTH - 60 + 100) {
 				if (mouse.button_left_pressed) {
 					status = STATUS_INFO;
 				}
@@ -20,8 +23,8 @@ void MenuScreen::update()
 	}
 
 	for (int i = 0; i < 2; i++) {
-		if (mouse.cur_pos_y * RATEH >= MENUSCREEN_HEIGHT * 7.5 - 25 && mouse.cur_pos_y * RATEH <= MENUSCREEN_HEIGHT * 7.5 + 5) {
-			if (mouse.cur_pos_x * RATEW >= MENUSCREEN_WIDTH - 120 + (i * 65) && mouse.cur_pos_x * RATEW <= MENUSCREEN_WIDTH + 30 + (i * 65)) {
+		if (pos_y >= MENUSCREEN_HEIGHT * 7.5 - 25 && pos_y <= MENUSCREEN_HEIGHT * 7.5 + 5) {
+			if (pos_x >= MENUSCREEN_WIDTH - 120 + (i * 65) && pos_x <= MENUSCREEN_WIDTH + 30 + (i * 65)) {
 				if (mouse.button_left_pressed) {
 					dPoint = i;
 				}
@@ -29,8 +32,8 @@ void MenuScreen::update()
 		}
 	}
 
-	if (mouse.cur_pos_y * RATEH >= MENUSCREEN_HEIGHT * 9 - 25 && mouse.cur_pos_y * RATEH <= MENUSCREEN_HEIGHT * 9 + 5) {
-		if (mouse.cur_pos_x * RATEW >= CANVAS_WIDTH / 3 && mouse.cur_pos_x * RATEW <= CANVAS_WIDTH / 3 + 315) {
+	if (pos_y >= MENUSCREEN_HEIGHT * 9 - 25 && pos_y <= MENUSCREEN_HEIGHT * 9 + 5) {
+		if (pos_x >= CANVAS_WIDTH / 3 && pos_x <= CANVAS_WIDTH / 3 + 315) {
 			if (mouse.button_left_pressed) {
 				AI = !AI;
 			}

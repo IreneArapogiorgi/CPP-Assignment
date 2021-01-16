@@ -1,5 +1,6 @@
 #pragma once
 #include "graphics.h"
+#include "config.h"
 
 typedef enum { STATUS_START, STATUS_MENU, STATUS_INFO, STATUS_LEVEL, STATUS_END, STATUS_ESCAPE } status_t;
 
@@ -14,6 +15,7 @@ public:
 	virtual void update() = 0;
 	virtual void draw() = 0;
 	virtual void init() = 0;
+
 	status_t getStatus() { return status; }
 	void setStatus(status_t st) { status = st; }
 	bool onCharge() { return (self == status); }
