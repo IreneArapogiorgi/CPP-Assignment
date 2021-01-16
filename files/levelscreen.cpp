@@ -24,7 +24,7 @@ void LevelScreen::update()
 
 		// Check collision between ball and obstacles
 		for (int i = 0; i < OBSTACLE_ROWS; i++) {
-			int index = ball->checkCollision(reinterpret_cast<GameObject**>(obstacles[i]), OBSTACLES_PER_ROW * level);
+			int index = ball->checkCollision(reinterpret_cast<GameObject**>(obstacles[i]), OBSTACLES_PER_ROW);
 
 			if (index != -1)
 			{
@@ -75,7 +75,7 @@ void LevelScreen::update()
 			playerTurn = 2;
 			playerB->reduceLife();
 			ball->setPosX(CANVAS_WIDTH / 2);
-			ball->setPosY(65);
+			ball->setPosY(30);
 			ball->setKeys(playerB_keyL, playerB_keyR);
 		}
 	}
@@ -87,7 +87,7 @@ void LevelScreen::update()
 			playerTurn = 1;
 			playerA->reduceLife();
 			ball->setPosX(CANVAS_WIDTH / 2);
-			ball->setPosY(CANVAS_HEIGHT - 65);
+			ball->setPosY(CANVAS_HEIGHT - 30);
 			ball->setKeys(playerA_keyL, playerA_keyR);
 		}
 	}
@@ -148,7 +148,7 @@ void LevelScreen::draw()
 	// Draw obstacles
 	if (obstacles) {
 		for (int i = 0; i < OBSTACLE_ROWS; i++) {
-			for (int j = 0; j < OBSTACLES_PER_ROW * level; j++) {
+			for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
 				if (obstacles[i][j] && obstacles[i][j]->isAlive()) {
 					obstacles[i][j]->draw();
 				}
@@ -160,8 +160,8 @@ void LevelScreen::draw()
 void LevelScreen::init()
 {
 	// Create players
-	playerA = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 50, 50, playerA_keyL, playerA_keyR, 6 - level);
-	playerB = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - (CANVAS_HEIGHT - 30), 50, 50, playerB_keyL, playerB_keyR, 6 - level);
+	playerA = new Player(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 10, 100, 20, playerA_keyL, playerA_keyR, 6 - level);
+	playerB = new Player(game, CANVAS_WIDTH / 2, 10, 100, 20, playerB_keyL, playerB_keyR, 6 - level);
 
 	players[0] = playerA;
 	players[1] = playerB;
@@ -171,26 +171,26 @@ void LevelScreen::init()
 
 	if (random_variable == 1)
 	{
-		ball = new Ball(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 65, 22, 22);
+		ball = new Ball(game, CANVAS_WIDTH / 2, CANVAS_HEIGHT - 30, 20, 20);
 		ball->setKeys(playerA_keyL, playerA_keyR);
 		playerTurn = 1;
 	}
 	else {
-		ball = new Ball(game, CANVAS_WIDTH / 2, 65, 22, 22);
+		ball = new Ball(game, CANVAS_WIDTH / 2, 30, 20, 20);
 		ball->setKeys(playerB_keyL, playerB_keyR);
 		playerTurn = 2;
 	}
 
 	// Increase ball's speed, if user chooses high difficulty
-	if (diff == 1) ball->setSpeed(2.4f);
+	if (diff == 1) ball->setSpeed(2.5f);
 
 	// Play against computer, if chosen by the user
 	if (AIflag) { ai = new AI(playerB, ball); }
 
 	// Create obstacles
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		obstacles[i] = new Obstacle * [OBSTACLES_PER_ROW * level];
-		for (int j = 0; j < OBSTACLES_PER_ROW * level; j++) {
+		obstacles[i] = new Obstacle * [OBSTACLES_PER_ROW];
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
 			obstacles[i][j] = new Obstacle(game, float(j * 20) + st[i][0], st[i][1], 20, 20, level);
 			obstacles[i][j]->init();
 		}
@@ -224,7 +224,7 @@ LevelScreen::~LevelScreen()
 
 	// Delete obstacles
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		for (int j = 0; j < OBSTACLES_PER_ROW * level; j++) {
+		for (int j = 0; j < OBSTACLES_PER_ROW; j++) {
 			if (obstacles[i][j])
 			{
 				delete obstacles[i][j];

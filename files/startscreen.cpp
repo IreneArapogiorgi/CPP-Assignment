@@ -8,8 +8,8 @@ void StartScreen::update()
 	// Show text
 	br.fill_opacity += 0.003f;
 
-	// Proceed to menu after approximately 4 seconds
-	if (graphics::getGlobalTime() > 4000)
+	// Proceed to menu after approximately 3 seconds
+	if (graphics::getGlobalTime() > 3000)
 	{
 		status = STATUS_MENU;
 	}

@@ -6,7 +6,7 @@
 void InfoScreen::update()
 {
 	// Fade out text
-	br.fill_opacity -= 0.002f;
+	br.fill_opacity -= 0.0025f;
 
 	// Start game after text is faded out completely
 	if (br.fill_opacity < 0.0f)

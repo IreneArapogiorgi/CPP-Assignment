@@ -4,7 +4,7 @@
 class Ball : public GameObject
 {
 	graphics::scancode_t keyLeft, keyRight;
-	float speed = 2.0f;
+	float speed = 1.8f;
 	float speedY = speed;
 	float speedX = 0.0f;
 	bool flag = false;

@@ -55,7 +55,7 @@ void Ball::update()
 
 void Ball::draw()
 {
-	// Add fade effect when ball is moving
+	// Add fade illusion when ball is moving
 	if (flag)
 	{
 		br.fill_opacity = 0.2;
