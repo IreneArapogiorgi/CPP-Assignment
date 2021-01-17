@@ -4,7 +4,7 @@
 class Ball : public GameObject
 {
 	scancode_t keyLeft, keyRight;
-	float speed = 1.8f;
+	float speed = 2.0f;
 	float speedY = speed;
 	float speedX = 0.0f;
 	bool flag = false;

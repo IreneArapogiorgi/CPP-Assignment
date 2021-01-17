@@ -40,6 +40,11 @@ void MenuScreen::update()
 
 void MenuScreen::draw()
 {
+	// Reset background
+	br.fill_color[0] = 1.0f;
+	br.fill_color[1] = 1.0f;
+	br.fill_color[2] = 1.0f;
+
 	string str = "CHOOSE LEVEL";
 	drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 1.7, 50, str, br);
 
