@@ -25,12 +25,28 @@ class LevelScreen : public Screen
 
 	Obstacle*** obstacles = new Obstacle * *[OBSTACLE_ROWS];
 
-	// Position of each series of obstacles
-	const float st[4][2] = { {CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 - 50}, {CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 - 20},
-						   {CANVAS_WIDTH / 4, CANVAS_HEIGHT / 2 + 10}, {CANVAS_WIDTH / 6, CANVAS_HEIGHT / 2 + 40} };
+	// Position of obstacles
+	const float st[12][2] = {{ 2,4 },
+							{ 5,5 },
+							{ 5,8 },
+							{ 2,9 },
+
+							{ 2,4 },
+							{ 2,5 },
+							{ 2,8 },
+							{ 2,9 },
+
+							{ 1,4 },
+							{ 3,5 },
+							{ 1,8 },
+							{ 3,9 }};
 
 	Ball* ball = nullptr;
 	AI* ai = nullptr;
+
+	void createBall();
+	void createPlayers();
+	void createObstacles();
 public:
 	void setAI(bool ai) { AIflag = ai; }
 	char getWinner() const { return winner; }

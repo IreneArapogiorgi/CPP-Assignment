@@ -10,22 +10,22 @@ void AI::update()
 		float playerPosX = player->getPosX();
 
 		if (ballPosx < playerPosX) {
-			if (ballPosx > playerPosX - 2) {
+			if (ballPosx > playerPosX - diff) {
 				playerPosX -= limit;
 				player->setPosX(playerPosX);
 			}
 			else {
-				playerPosX -= 2;
+				playerPosX -= diff;
 				player->setPosX(playerPosX);
 			}
 		}
 		else if (ballPosx > playerPosX) {
-			if (ballPosx < playerPosX + 2) {
+			if (ballPosx < playerPosX + diff) {
 				playerPosX += limit;
 				player->setPosX(playerPosX);
 			}
 			else {
-				playerPosX += 2;
+				playerPosX += diff;
 				player->setPosX(playerPosX);
 			}
 		}
@@ -46,6 +46,14 @@ void AI::update()
 			ball->startBall();
 		}
 		player->startingPos();
+	}
+}
+
+void AI::setDiff(unsigned int diff)
+{
+	if (diff == 1)
+	{
+		this->diff = 6;
 	}
 }
 

@@ -4,7 +4,7 @@
 void Ball::update()
 {
 	int u = 1;
-	if (speedX > -0.1 && speedX < 0.1) {
+	if (speedX > -0.1 * speed && speedX < 0.1 * speed) {
 		speedX *= 2;
 		if (speedX == 0) {
 			default_random_engine generator;
@@ -14,7 +14,7 @@ void Ball::update()
 		if (speedY < 0) u = -1;
 		speedY = sqrt(pow(speed, 2) - pow(speedX, 2)) * u;
 	}
-	else if (speedY > -0.1 && speedY < 0.1) {
+	else if (speedY > -0.1 * speed && speedY < 0.1 * speed) {
 		speedY *= 2;
 		if (speedY == 0) {
 			default_random_engine generator;
