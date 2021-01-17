@@ -4,6 +4,8 @@
 void Ball::update()
 {
 	int u = 1;
+
+	// Avoid straight direction of ball
 	if (speedX > -0.1 * speed && speedX < 0.1 * speed) {
 		speedX *= 2;
 		if (speedX == 0) {
@@ -52,7 +54,7 @@ void Ball::update()
 
 void Ball::draw()
 {
-	// Add fade illusion when ball is moving
+	// Add blurred illusion when ball is moving
 	if (flag)
 	{
 		br.fill_opacity = 0.2;
@@ -71,6 +73,7 @@ void Ball::init()
 
 void Ball::start()
 {
+	// Player can choose direction of the launching ball
 	if (getKeyState(keyLeft))
 	{
 		flag = true;
@@ -128,15 +131,18 @@ int Ball::checkCollision(GameObject* objects[], int size)
 					reflectX();
 					reflectY();
 				}
+				// If true, ball hits on corner
 				else if (!(deltaX == 0 || deltaY == 0)) {
 					int yp = 1;
 					int xp = 1;
 
+					// Keep speed direction
 					if (speedX < 0) xp = -1;
 					if (speedY < 0) yp = -1;
 
 					Cos = deltaY / (sqrt(deltaX * deltaX) + sqrt(deltaY * deltaY));
 
+					// We want the angle being positive
 					if (Cos < 0) Cos *= -1;
 
 					speedX = speed * Cos * xp;
@@ -161,9 +167,11 @@ int Ball::checkCollision(GameObject* objects[], int size)
 						}
 					}
 				}
+				// If deltaY==0, ball rests on a vertical surface
 				else if (deltaY == 0) {
 					reflectX();
 				}
+				// If deltax==0, ball rests on a horizontal surface
 				else {
 					reflectY();
 				}
@@ -171,6 +179,7 @@ int Ball::checkCollision(GameObject* objects[], int size)
 				float disx;
 				float disy;
 
+				// If ball is found inside another game object, place it in the nearest place outside of it
 				disx = temp->getPosX() - pos_x;
 				disy = temp->getPosY() - pos_y;
 

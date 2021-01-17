@@ -7,7 +7,6 @@ void Game::update()
 	switch (startscreen->getStatus()) {
 		case STATUS_START:
 			startscreen->update();
-			if (!startscreen->onCharge()) { delete startscreen; }
 			break;
 
 		case STATUS_MENU:
@@ -17,13 +16,11 @@ void Game::update()
 				levelscreen->setLevel(menuscreen->level());
 				levelscreen->setAI(menuscreen->getAI());
 				levelscreen->init();
-				delete menuscreen;
 			}
 			break;
 
 		case STATUS_INFO:
 			infoscreen->update();
-			if (!infoscreen->onCharge()) { delete infoscreen; }
 			break;
 
 		case STATUS_LEVEL:
@@ -34,6 +31,9 @@ void Game::update()
 		case STATUS_END:
 			endscreen->update();
 			if (!endscreen->onCharge()) {
+				delete startscreen;
+				delete menuscreen;
+				delete infoscreen;
 				delete levelscreen;
 				delete endscreen;
 
@@ -43,6 +43,9 @@ void Game::update()
 			break;
 
 		case STATUS_ESCAPE:
+			delete startscreen;
+			delete menuscreen;
+			delete infoscreen;
 			delete levelscreen;
 			delete endscreen;
 
@@ -93,4 +96,9 @@ Game::Game()
 
 Game::~Game()
 {
+	if (startscreen) delete startscreen;
+	if (menuscreen) delete menuscreen;
+	if (infoscreen) delete infoscreen;
+	if (levelscreen) delete levelscreen;
+	if (endscreen) delete endscreen;
 }

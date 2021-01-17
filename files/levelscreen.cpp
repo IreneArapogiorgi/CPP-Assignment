@@ -3,6 +3,7 @@
 
 void LevelScreen::createBall()
 {
+	// Choose randomly which player gets the ball
 	random_device rd;
 	mt19937 mt(rd());
 	uniform_real_distribution<double> dist(1.0, 10.0);
@@ -75,6 +76,7 @@ void LevelScreen::update()
 		status = STATUS_ESCAPE;
 	}
 
+	// If ball not in start mode
 	if (ball && ball->respawn()) {
 		if (playerA) playerA->update();
 		if (playerB) {
@@ -115,6 +117,7 @@ void LevelScreen::update()
 		ball->checkCollision(players, 2);
 	}
 	else {
+		// Set players at their starting position
 		playerA->startingPos();
 		playerB->startingPos();
 

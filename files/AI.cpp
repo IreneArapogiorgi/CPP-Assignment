@@ -33,6 +33,7 @@ void AI::update()
 		if (playerPosX + player->getWidth() / 2 > CANVAS_WIDTH) { player->setPosX(CANVAS_WIDTH - player->getWidth() / 2); }
 	}
 
+	// Wait before playing
 	float temp = getGlobalTime();
 
 	if (!ball->respawn()) {

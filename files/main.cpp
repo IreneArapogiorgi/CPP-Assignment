@@ -1,3 +1,5 @@
+// C++ ASSIGNMENT -- p3130139 - t8160012
+
 #include "graphics.h"
 #include "config.h"
 #include "game.h"
@@ -20,7 +22,7 @@ int main()
 {
     Game mygame;
 
-    createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game");
+    createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Space Battles");
 
     setUserData(&mygame);
     setDrawFunction(draw);
