@@ -14,12 +14,6 @@ void StartScreen::update()
 
 void StartScreen::draw()
 {
-	// Draw background
-	br.fill_color[0] = 1.0f;
-	br.fill_color[1] = 1.0f;
-	br.fill_color[2] = 1.0f;
-	setFont(string(ASSET_PATH) + "screen_font.ttf");
-
 	string str = "WELCOME  TO  GHOST  HUNTING";
 	drawText(CANVAS_WIDTH / 5, CANVAS_HEIGHT / 2, 50, str, br);
 }

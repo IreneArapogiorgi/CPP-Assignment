@@ -6,7 +6,7 @@ void InfoScreen::update()
 	br.fill_opacity -= 0.0025f;
 
 	// Start game after text is faded out completely
-	if (br.fill_opacity < 0.0f)
+	if (br.fill_opacity < 0.01f)
 	{
 		status = STATUS_LEVEL;
 	}
@@ -14,12 +14,6 @@ void InfoScreen::update()
 
 void InfoScreen::draw()
 {
-	// Draw background
-	br.fill_color[0] = 1.0f;
-	br.fill_color[1] = 1.0f;
-	br.fill_color[2] = 1.0f;
-	setFont(string(ASSET_PATH) + "screen_font.ttf");
-
 	string str = "PLAYER  1  MOVES  WITH  A  AND  D";
 	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 3.5, 30, str, br);
 

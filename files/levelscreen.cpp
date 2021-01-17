@@ -108,10 +108,10 @@ void LevelScreen::update()
 void LevelScreen::draw()
 {
 	// Draw background
-	br.fill_color[0] = 0.0f;
-	br.fill_color[1] = 0.0f;
-	br.fill_color[2] = 0.0f;
-	setWindowBackground(br);
+	br.texture = string(ASSET_PATH) + "levelscreen.png";
+	br.outline_opacity = 0.0f;
+	br.fill_opacity = 0.45f;
+	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
 
 	// Draw players
 	if (playerA && playerB)
@@ -128,6 +128,7 @@ void LevelScreen::draw()
 		br.fill_color[0] = 1.0f;
 		br.fill_color[1] = 1.0f;
 		br.fill_color[2] = 1.0f;
+		br.fill_opacity = 1.0f;
 		setFont(string(ASSET_PATH) + "info_font.ttf");
 
 		char info[9];

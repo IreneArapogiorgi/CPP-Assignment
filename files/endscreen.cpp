@@ -11,6 +11,7 @@ void EndScreen::update()
 
 void EndScreen::draw()
 {
+	// Reset font
 	setFont(string(ASSET_PATH) + "screen_font.ttf");
 
 	char winner[16];
