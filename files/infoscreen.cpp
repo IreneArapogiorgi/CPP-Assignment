@@ -18,7 +18,7 @@ void InfoScreen::draw()
 	br.fill_color[0] = 1.0f;
 	br.fill_color[1] = 1.0f;
 	br.fill_color[2] = 1.0f;
-	setFont(std::string(ASSET_PATH) + "screen_font.ttf");
+	setFont(string(ASSET_PATH) + "screen_font.ttf");
 
 	string str = "PLAYER  1  MOVES  WITH  A  AND  D";
 	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 3.5, 30, str, br);

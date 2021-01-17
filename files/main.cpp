@@ -6,13 +6,13 @@ using namespace graphics;
 
 void update(float ms)
 {
-    Game* game = reinterpret_cast<Game*>(graphics::getUserData());
+    Game* game = reinterpret_cast<Game*>(getUserData());
     game->update();
 }
 
 void draw()
 {
-    Game* game = reinterpret_cast<Game*>(graphics::getUserData());
+    Game* game = reinterpret_cast<Game*>(getUserData());
     game->draw();
 }
 
@@ -27,7 +27,7 @@ int main()
     setUpdateFunction(update);
 
     setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
-    setCanvasScaleMode(graphics::CANVAS_SCALE_FIT);
+    setCanvasScaleMode(CANVAS_SCALE_FIT);
 
     mygame.init();
     startMessageLoop();
