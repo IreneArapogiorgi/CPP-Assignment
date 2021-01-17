@@ -7,9 +7,10 @@ void Ball::update()
 	if (speedX > -0.1 * speed && speedX < 0.1 * speed) {
 		speedX *= 2;
 		if (speedX == 0) {
-			default_random_engine generator;
-			uniform_real_distribution<> distribution(-0.1, 0.1);
-			speedX = distribution(generator);
+			random_device rd;
+			mt19937 mt(rd());
+			uniform_real_distribution<double> dist(-0.1, 0.1);
+			speedX = (float)dist(mt);
 		}
 		if (speedY < 0) u = -1;
 		speedY = sqrt(pow(speed, 2) - pow(speedX, 2)) * u;
@@ -17,9 +18,10 @@ void Ball::update()
 	else if (speedY > -0.1 * speed && speedY < 0.1 * speed) {
 		speedY *= 2;
 		if (speedY == 0) {
-			default_random_engine generator;
-			uniform_real_distribution<> distribution(-0.1, 0.1);
-			speedY = distribution(generator);
+			random_device rd;
+			mt19937 mt(rd());
+			uniform_real_distribution<double> dist(-0.1, 0.1);
+			speedY = (float)dist(mt);
 		}
 		if (speedX < 0) u = -1;
 		speedX = sqrt(pow(speed, 2) - pow(speedY, 2)) * u;

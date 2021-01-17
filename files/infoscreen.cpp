@@ -19,17 +19,18 @@ void InfoScreen::draw()
 	br.fill_color[1] = 1.0f;
 	br.fill_color[2] = 1.0f;
 
+	br.texture = string(ASSET_PATH) + "background.png";
+	br.outline_opacity = 0.0f;
+	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
+
 	string str = "PLAYER  1  MOVES  WITH  A  AND  D";
-	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 3.5, 30, str, br);
+	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 4, 30, str, br);
 
 	str = "PLAYER  2  MOVES  WITH  J  AND  L";
-	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 4.5, 30, str, br);
-
-	str = "PRESS  SPACE  TO  THROW  THE  BALL";
-	drawText(INFOSCREEN_WIDTH + 26, INFOSCREEN_HEIGHT * 5.5, 30, str, br);
+	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 5.2, 30, str, br);
 
 	str = "PRESS  Q  TO  RETURN  TO  THE  MENU";
-	drawText(INFOSCREEN_WIDTH + 28, INFOSCREEN_HEIGHT * 6.5, 30, str, br);
+	drawText(INFOSCREEN_WIDTH + 28, INFOSCREEN_HEIGHT * 6.4, 30, str, br);
 }
 
 void InfoScreen::init()

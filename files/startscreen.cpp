@@ -18,6 +18,10 @@ void StartScreen::draw()
 	br.fill_color[0] = 1.0f;
 	br.fill_color[1] = 1.0f;
 	br.fill_color[2] = 1.0f;
+	
+	br.texture = string(ASSET_PATH) + "background.png";
+	br.outline_opacity = 0.0f;
+	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
 
 	string str = "SPACE  BATTLES";
 	drawText(CANVAS_WIDTH / 5 + 30, CANVAS_HEIGHT / 2, 80, str, br);

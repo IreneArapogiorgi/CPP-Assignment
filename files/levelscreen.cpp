@@ -1,8 +1,13 @@
 #include "levelscreen.h"
+#include <random>
 
 void LevelScreen::createBall()
 {
-	int random_variable = rand() % 2;
+	random_device rd;
+	mt19937 mt(rd());
+	uniform_real_distribution<double> dist(1.0, 10.0);
+
+	int random_variable = (int)dist(mt) % 2;
 
 	if (random_variable == 1)
 	{
@@ -28,6 +33,21 @@ void LevelScreen::createPlayers()
 
 void LevelScreen::createObstacles()
 {
+	float st[12][2] = { { 3.5,4 },
+						{ 4,5 },
+						{ 4,8 },
+						{ 3.5,9 },
+
+						{ 2.5,4 },
+						{ 2.5,5 },
+						{ 2.5,8 },
+						{ 2.5,9 },
+
+						{ 2,4 },
+						{ 3,6 },
+						{ 2,7 },
+						{ 3,9 } };
+
 	int space = 0;
 	bool t = false;
 	if (level == 1) t = true;

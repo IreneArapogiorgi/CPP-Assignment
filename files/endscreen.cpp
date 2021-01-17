@@ -12,9 +12,9 @@ void EndScreen::update()
 void EndScreen::draw()
 {
 	// Draw background
-	br.fill_color[0] = 1.0f;
-	br.fill_color[1] = 1.0f;
-	br.fill_color[2] = 1.0f;
+	br.texture = string(ASSET_PATH) + "background.png";
+	br.outline_opacity = 0.0f;
+	drawRect(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, CANVAS_WIDTH, CANVAS_HEIGHT, br);
 
 	// Reset font
 	setFont(string(ASSET_PATH) + "screen_font.ttf");
