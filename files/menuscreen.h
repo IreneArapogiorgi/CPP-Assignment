@@ -3,10 +3,10 @@
 
 class MenuScreen : public Screen
 {
-	graphics::MouseState mouse;
+	MouseState mouse;
+	unsigned int bPoint = 0;
+	unsigned int dPoint = 0;
 	bool AI = false;
-	int bPoint = 0;
-	int dPoint = 0;
 
 	// Add color of text
 	void brush(float i, int j) { br.fill_color[j] = i; }
@@ -15,8 +15,8 @@ public:
 	void draw() override;
 	void init() override;
 
-	bool getAI() { return AI; }
-	int diff() { return dPoint; }
-	int level() { return bPoint; }
+	bool getAI() const { return AI; }
+	unsigned int diff() const { return dPoint; }
+	unsigned int level() const { return bPoint; }
 	MenuScreen(const class Game& mygame);
 };

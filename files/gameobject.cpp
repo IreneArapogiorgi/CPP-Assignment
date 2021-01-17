@@ -2,7 +2,7 @@
 
 void GameObject::draw()
 {
-	graphics::drawRect(pos_x, pos_y, width, height, br);
+	drawRect(pos_x, pos_y, width, height, br);
 }
 
 GameObject::GameObject(const Game& mygame, float x, float y, float width, float height) : game(mygame), 

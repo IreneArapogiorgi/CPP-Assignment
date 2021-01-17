@@ -1,11 +1,10 @@
 #include "levelscreen.h"
-#include "graphics.h"
-#include "game.h"
-#include <ctime>
 
 void LevelScreen::update()
 {
-	if (graphics::getKeyState(graphics::SCANCODE_Q)) {
+	// Proceed to menu screen if Q is pressed
+	if (getKeyState(SCANCODE_Q))
+	{
 		status = STATUS_ESCAPE;
 	}
 
@@ -29,8 +28,8 @@ void LevelScreen::update()
 			if (index != -1)
 			{
 				// Play collision sound
-				std::string wav = std::string(ASSET_PATH) + "collision_sound.wav";
-				graphics::playSound(wav, 0.2f);
+				string sound = string(ASSET_PATH) + "collision_sound.wav";
+				playSound(sound, 0.2f);
 
 				// Reduce obstacle's life
 				obstacles[i][index]->reduceLife();
@@ -96,7 +95,6 @@ void LevelScreen::update()
 	if (playerA && playerB)
 	{
 		if (playerA->getLife() == 0) {
-
 			winner = '1';
 			status = STATUS_END;
 		}
@@ -110,17 +108,18 @@ void LevelScreen::update()
 void LevelScreen::draw()
 {
 	// Draw background
-	graphics::Brush br;
 	br.fill_color[0] = 0.0f;
 	br.fill_color[1] = 0.0f;
 	br.fill_color[2] = 0.0f;
-	graphics::setWindowBackground(br);
+	setWindowBackground(br);
 
 	// Draw players
 	if (playerA && playerB)
 	{
 		playerA->draw();
+		setOrientation(180);
 		playerB->draw();
+		resetPose();
 	}
 
 	// Display UI info
@@ -129,14 +128,14 @@ void LevelScreen::draw()
 		br.fill_color[0] = 1.0f;
 		br.fill_color[1] = 1.0f;
 		br.fill_color[2] = 1.0f;
-		graphics::setFont(std::string(ASSET_PATH) + "info_font.ttf");
+		setFont(string(ASSET_PATH) + "info_font.ttf");
 
-		char info[10];
+		char info[9];
 		sprintf_s(info, "Life: %d", playerA->getLife());
-		graphics::drawText(INFOTEXT_POSX, INFOTEXT_POSY, INFOTEXT_SIZE, info, br);
+		drawText(INFOTEXT_POSX, INFOTEXT_POSY, INFOTEXT_SIZE, info, br);
 
 		sprintf_s(info, "Life: %d", playerB->getLife());
-		graphics::drawText(INFOTEXT_POSX, CANVAS_HEIGHT - INFOTEXT_POSY, INFOTEXT_SIZE, info, br);
+		drawText(INFOTEXT_POSX, CANVAS_HEIGHT - INFOTEXT_POSY, INFOTEXT_SIZE, info, br);
 	}
 
 	// Draw ball
@@ -167,7 +166,7 @@ void LevelScreen::init()
 	players[1] = playerB;
 
 	// Create ball
-	int random_variable = std::rand() % 2;
+	int random_variable = rand() % 2;
 
 	if (random_variable == 1)
 	{
@@ -185,7 +184,7 @@ void LevelScreen::init()
 	if (diff == 1) ball->setSpeed(2.5f);
 
 	// Play against computer, if chosen by the user
-	if (AIflag) { ai = new AI(playerB, ball); }
+	if (AIflag) { ai = new AI(game, playerB, ball); }
 
 	// Create obstacles
 	for (int i = 0; i < OBSTACLE_ROWS; i++) {

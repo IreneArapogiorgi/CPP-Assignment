@@ -1,11 +1,9 @@
 #include "endscreen.h"
-#include "graphics.h"
-#include "config.h"
 
 void EndScreen::update()
 {
-	// Re-locate to start screen if Enter is pressed
-	if (graphics::getKeyState(graphics::SCANCODE_RETURN))
+	// Proceed to start screen if Enter is pressed
+	if (getKeyState(SCANCODE_RETURN))
 	{
 		status = STATUS_MENU;
 	}
@@ -13,16 +11,14 @@ void EndScreen::update()
 
 void EndScreen::draw()
 {
-	graphics::setFont(std::string(ASSET_PATH) + "screen_font.ttf");
+	setFont(string(ASSET_PATH) + "screen_font.ttf");
 
-	std::string gameover("PLAYER  ");
-	gameover += winner;
-	gameover += "  WON";
-	graphics::drawText(CANVAS_WIDTH / 4 + 35, CANVAS_HEIGHT / 2.2f, 70, gameover, br);
+	char winner[16];
+	sprintf_s(winner, "PLAYER  %c  WON", this->winner);
+	drawText(CANVAS_WIDTH / 4 + 35, CANVAS_HEIGHT / 2.2f, 70, winner, br);
 
-	char newgame[32];
-	sprintf_s(newgame, "PRESS ENTER TO START A NEW GAME");
-	graphics::drawText(CANVAS_WIDTH / 5, CANVAS_HEIGHT / 1.6f, 40, newgame, br);
+	string str = "PRESS  ENTER  TO  START  A  NEW  GAME";
+	drawText(CANVAS_WIDTH / 5 - 15, CANVAS_HEIGHT / 1.6f, 40, str, br);
 }
 
 void EndScreen::init()

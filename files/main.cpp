@@ -2,6 +2,8 @@
 #include "config.h"
 #include "game.h"
 
+using namespace graphics;
+
 void update(float ms)
 {
     Game* game = reinterpret_cast<Game*>(graphics::getUserData());
@@ -18,17 +20,16 @@ int main()
 {
     Game mygame;
 
-    graphics::createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game");
+    createWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Game");
 
-    graphics::setUserData(&mygame);
-    graphics::setDrawFunction(draw);
-    graphics::setUpdateFunction(update);
+    setUserData(&mygame);
+    setDrawFunction(draw);
+    setUpdateFunction(update);
 
-    graphics::setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
-    graphics::setCanvasScaleMode(graphics::CANVAS_SCALE_FIT);
+    setCanvasSize(CANVAS_WIDTH, CANVAS_HEIGHT);
+    setCanvasScaleMode(graphics::CANVAS_SCALE_FIT);
 
     mygame.init();
-    graphics::startMessageLoop();
-
+    startMessageLoop();
     return 0;
 }

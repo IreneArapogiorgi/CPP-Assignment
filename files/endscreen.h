@@ -8,6 +8,6 @@ public:
 	void update() override;
 	void draw() override;
 	void init() override;
-	void setWinner(char winner) { this->winner = winner; }
+	void setWinner(char w) { winner = w; }
 	EndScreen(const class Game& mygame);
 };

@@ -58,15 +58,19 @@ void Game::draw()
 		case STATUS_START:
 			startscreen->draw();
 			break;
+
 		case STATUS_MENU:
 			menuscreen->draw();
 			break;
+
 		case STATUS_INFO:
 			infoscreen->draw();
 			break;
+
 		case STATUS_LEVEL:
 			levelscreen->draw();
 			break;
+
 		case STATUS_END:
 			endscreen->draw();
 			break;

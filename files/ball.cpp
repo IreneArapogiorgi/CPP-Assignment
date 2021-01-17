@@ -1,10 +1,5 @@
-#include "config.h"
 #include "ball.h"
-#include "game.h"
-#include "math.h"
 #include <random>
-#include <iostream>
-#include <algorithm>
 
 void Ball::update()
 {
@@ -12,8 +7,8 @@ void Ball::update()
 	if (speedX > -0.1 && speedX < 0.1) {
 		speedX *= 2;
 		if (speedX == 0) {
-			std::default_random_engine generator;
-			std::uniform_real_distribution<> distribution(-0.1, 0.1);
+			default_random_engine generator;
+			uniform_real_distribution<> distribution(-0.1, 0.1);
 			speedX = distribution(generator);
 		}
 		if (speedY < 0) u = -1;
@@ -22,8 +17,8 @@ void Ball::update()
 	else if (speedY > -0.1 && speedY < 0.1) {
 		speedY *= 2;
 		if (speedY == 0) {
-			std::default_random_engine generator;
-			std::uniform_real_distribution<> distribution(-0.1, 0.1);
+			default_random_engine generator;
+			uniform_real_distribution<> distribution(-0.1, 0.1);
 			speedY = distribution(generator);
 		}
 		if (speedX < 0) u = -1;
@@ -48,8 +43,8 @@ void Ball::update()
 	}
 
 	if (play_sound) {
-		std::string wav = std::string(ASSET_PATH) + "ball_sound.wav";
-		graphics::playSound(wav, 1.0f);
+		string sound = string(ASSET_PATH) + "ball_sound.wav";
+		playSound(sound, 1.0f);
 	}
 }
 
@@ -74,17 +69,17 @@ void Ball::init()
 
 void Ball::start()
 {
-	if (graphics::getKeyState(keyLeft))
+	if (getKeyState(keyLeft))
 	{
 		flag = true;
-		speedX -= graphics::getDeltaTime() / 1000;
+		speedX -= getDeltaTime() / 1000;
 		if (speedX <= -speed) { speedX = -speed + 0.1; }
 	}
 
-	if (graphics::getKeyState(keyRight))
+	if (getKeyState(keyRight))
 	{
 		flag = true;
-		speedX += graphics::getDeltaTime() / 1000;
+		speedX += getDeltaTime() / 1000;
 		if (speedX >= speed) { speedX = speed - 0.1; }
 	}
 
@@ -121,8 +116,8 @@ int Ball::checkCollision(GameObject* objects[], int size)
 
 			float w = temp->getWidth();
 			float h = temp->getHeight();
-			float deltaX = pos_x - std::max(temp->getPosX() - w / 2, std::min(pos_x, temp->getPosX() + w / 2));
-			float deltaY = pos_y - std::max(temp->getPosY() - h / 2, std::min(pos_y, temp->getPosY() + h / 2));
+			float deltaX = pos_x - max(temp->getPosX() - w / 2, min(pos_x, temp->getPosX() + w / 2));
+			float deltaY = pos_y - max(temp->getPosY() - h / 2, min(pos_y, temp->getPosY() + h / 2));
 
 			if ((deltaX * deltaX + deltaY * deltaY) < (height * height / 4)) {
 				float Cos;
@@ -200,7 +195,7 @@ int Ball::checkCollision(GameObject* objects[], int size)
 	return -1;
 }
 
-void Ball::setKeys(graphics::scancode_t keyLeft, graphics::scancode_t keyRight)
+void Ball::setKeys(scancode_t keyLeft, scancode_t keyRight)
 {
 	this->keyLeft = keyLeft;
 	this->keyRight = keyRight;
@@ -209,6 +204,6 @@ void Ball::setKeys(graphics::scancode_t keyLeft, graphics::scancode_t keyRight)
 Ball::Ball(const Game& mygame, float pos_x, float pos_y, float width, float height) : GameObject(mygame, pos_x, pos_y, width, height)
 {
 	// Draw ball
-	br.texture = std::string(ASSET_PATH) + "ball.png";
+	br.texture = string(ASSET_PATH) + "ball.png";
 	br.outline_opacity = 0.0f;
 }

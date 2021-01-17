@@ -1,6 +1,4 @@
 #include "obstacle.h"
-#include "config.h"
-#include "game.h"
 
 void Obstacle::update()
 {
@@ -8,7 +6,7 @@ void Obstacle::update()
 
 void Obstacle::init()
 {
-	l = 1.0 / life;
+	l = 1.0 / (float)life;
 }
 
 bool Obstacle::isAlive()
@@ -18,10 +16,10 @@ bool Obstacle::isAlive()
 	return true;
 }
 
-Obstacle::Obstacle(const Game& mygame, float pos_x, float pos_y, float width, float height, int l) 
+Obstacle::Obstacle(const Game& mygame, float pos_x, float pos_y, float width, float height, unsigned int l)
 				  : GameObject(mygame, pos_x, pos_y, width, height), life(l)
 {
 	// Draw obstacle
-	br.texture = std::string(ASSET_PATH) + "ghost.png";
+	br.texture = string(ASSET_PATH) + "obstacle.png";
 	br.outline_opacity = 0.0f;
 }

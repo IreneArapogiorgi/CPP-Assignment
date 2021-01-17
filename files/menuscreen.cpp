@@ -1,19 +1,16 @@
 #include "menuscreen.h"
-#include "graphics.h"
-#include "config.h"
-#include "game.h"
 
 void MenuScreen::update()
 {
-	graphics::getMouseState(mouse);
-	float pos_x = graphics::windowToCanvasX(mouse.cur_pos_x);
-	float pos_y = graphics::windowToCanvasY(mouse.cur_pos_y);
+	getMouseState(mouse);
+	float pos_x = windowToCanvasX(mouse.cur_pos_x);
+	float pos_y = windowToCanvasY(mouse.cur_pos_y);
 
 	bPoint = 0;
 
 	for (int i = 1; i < 4; i++) {
 		if (pos_y >= MENUSCREEN_HEIGHT * (i + 2.5) - 25 && pos_y <= MENUSCREEN_HEIGHT * (i + 2.5) + 5) {
-			if (pos_x >= MENUSCREEN_WIDTH - 60 && pos_x <= MENUSCREEN_WIDTH - 60 + 100) {
+			if (pos_x >= MENUSCREEN_WIDTH - 60 && pos_x <= MENUSCREEN_WIDTH + 40) {
 				if (mouse.button_left_pressed) {
 					status = STATUS_INFO;
 				}
@@ -47,10 +44,10 @@ void MenuScreen::draw()
 	br.fill_color[0] = 1.0f;
 	br.fill_color[1] = 1.0f;
 	br.fill_color[2] = 1.0f;
-	graphics::setFont(std::string(ASSET_PATH) + "screen_font.ttf");
+	setFont(string(ASSET_PATH) + "screen_font.ttf");
 
-	std::string str = "CHOOSE LEVEL";
-	graphics::drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 1.7, 50, str, br);
+	string str = "CHOOSE LEVEL";
+	drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 1.7, 50, str, br);
 
 	// Change LEVEL 1 option's color on hover
 	if (bPoint == 1) {
@@ -58,7 +55,7 @@ void MenuScreen::draw()
 	}
 
 	str = "LEVEL 1";
-	graphics::drawText(MENUSCREEN_WIDTH - 60, MENUSCREEN_HEIGHT * 3.5, 30, str, br);
+	drawText(MENUSCREEN_WIDTH - 60, MENUSCREEN_HEIGHT * 3.5, 30, str, br);
 
 	// White color of LEVEL 1 option
 	if (bPoint == 1) {
@@ -71,7 +68,7 @@ void MenuScreen::draw()
 	}
 
 	str = "LEVEL 2";
-	graphics::drawText(MENUSCREEN_WIDTH - 60, MENUSCREEN_HEIGHT * 4.5, 30, str, br);
+	drawText(MENUSCREEN_WIDTH - 60, MENUSCREEN_HEIGHT * 4.5, 30, str, br);
 
 	// White color of LEVEL 2 option
 	if (bPoint == 2) {
@@ -84,7 +81,7 @@ void MenuScreen::draw()
 	}
 
 	str = "LEVEL 3";
-	graphics::drawText(MENUSCREEN_WIDTH - 60, MENUSCREEN_HEIGHT * 5.5, 30, str, br);
+	drawText(MENUSCREEN_WIDTH - 60, MENUSCREEN_HEIGHT * 5.5, 30, str, br);
 
 	// White color of LEVEL 3 option
 	if (bPoint == 3) {
@@ -97,7 +94,7 @@ void MenuScreen::draw()
 	}
 
 	str = "EASY";
-	graphics::drawText(MENUSCREEN_WIDTH - 120, MENUSCREEN_HEIGHT * 7.5, 30, str, br);
+	drawText(MENUSCREEN_WIDTH - 120, MENUSCREEN_HEIGHT * 7.5, 30, str, br);
 
 	// White color of EASY option
 	if (dPoint == 0) {
@@ -110,7 +107,7 @@ void MenuScreen::draw()
 	}
 
 	str = "HARD";
-	graphics::drawText(MENUSCREEN_WIDTH + 30, MENUSCREEN_HEIGHT * 7.5, 30, str, br);
+	drawText(MENUSCREEN_WIDTH + 30, MENUSCREEN_HEIGHT * 7.5, 30, str, br);
 
 	// White color of HARD option
 	if (dPoint == 1) {
@@ -123,7 +120,7 @@ void MenuScreen::draw()
 	}
 
 	str = "PLAY AGAINST COMPUTER";
-	graphics::drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 9, 30, str, br);
+	drawText(CANVAS_WIDTH / 3, MENUSCREEN_HEIGHT * 9, 30, str, br);
 
 	if (AI) {
 		brush(1, 0);

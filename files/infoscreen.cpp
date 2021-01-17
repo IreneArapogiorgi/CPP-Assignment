@@ -1,7 +1,4 @@
 #include "infoscreen.h"
-#include "graphics.h"
-#include "config.h"
-#include "game.h"
 
 void InfoScreen::update()
 {
@@ -21,19 +18,19 @@ void InfoScreen::draw()
 	br.fill_color[0] = 1.0f;
 	br.fill_color[1] = 1.0f;
 	br.fill_color[2] = 1.0f;
-	graphics::setFont(std::string(ASSET_PATH) + "screen_font.ttf");
+	setFont(std::string(ASSET_PATH) + "screen_font.ttf");
 
-	std::string str = "PLAYER  1  MOVES  WITH  A  AND  D";
-	graphics::drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 3.5, 30, str, br);
+	string str = "PLAYER  1  MOVES  WITH  A  AND  D";
+	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 3.5, 30, str, br);
 
 	str = "PLAYER  2  MOVES  WITH  J  AND  L";
-	graphics::drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 4.5, 30, str, br);
+	drawText(INFOSCREEN_WIDTH + 40, INFOSCREEN_HEIGHT * 4.5, 30, str, br);
 
 	str = "PRESS  SPACE  TO  THROW  THE  BALL";
-	graphics::drawText(INFOSCREEN_WIDTH + 26, INFOSCREEN_HEIGHT * 5.5, 30, str, br);
+	drawText(INFOSCREEN_WIDTH + 26, INFOSCREEN_HEIGHT * 5.5, 30, str, br);
 
 	str = "PRESS  Q  TO  RETURN  TO  THE  MENU";
-	graphics::drawText(INFOSCREEN_WIDTH + 28, INFOSCREEN_HEIGHT * 6.5, 30, str, br);
+	drawText(INFOSCREEN_WIDTH + 28, INFOSCREEN_HEIGHT * 6.5, 30, str, br);
 }
 
 void InfoScreen::init()

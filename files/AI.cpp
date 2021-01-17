@@ -33,7 +33,7 @@ void AI::update()
 		if (playerPosX + player->getWidth() / 2 > CANVAS_WIDTH) { player->setPosX(CANVAS_WIDTH - player->getWidth() / 2); }
 	}
 
-	float temp = graphics::getGlobalTime();
+	float temp = getGlobalTime();
 
 	if (!ball->respawn()) {
 		if (temp > timer && flag) {
@@ -49,6 +49,10 @@ void AI::update()
 	}
 }
 
-AI::AI(Player* player, Ball* ball) : player(player), ball(ball)
+AI::AI(const Game& mygame, Player* player, Ball* ball) : game(mygame), player(player), ball(ball)
+{
+}
+
+AI::~AI()
 {
 }

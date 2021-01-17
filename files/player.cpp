@@ -1,17 +1,15 @@
 #include "player.h"
-#include "config.h"
-#include "game.h"
 
 void Player::update()
 {
 	// Move player using given keys
-	if (graphics::getKeyState(keyLeft))
+	if (getKeyState(keyLeft))
 	{
-		pos_x -= getSpeed() * graphics::getDeltaTime() / BALL_MOVEMENT;
+		pos_x -= getSpeed() * getDeltaTime() / BALL_MOVEMENT;
 	}
-	if (graphics::getKeyState(keyRight))
+	if (getKeyState(keyRight))
 	{
-		pos_x += getSpeed() * graphics::getDeltaTime() / BALL_MOVEMENT;
+		pos_x += getSpeed() * getDeltaTime() / BALL_MOVEMENT;
 	}
 
 	// Keep player within canvas borders
@@ -28,10 +26,10 @@ void Player::startingPos()
 	pos_x = CANVAS_WIDTH / 2;
 }
 
-Player::Player(const Game& mygame, float pos_x, float pos_y, float width, float height, graphics::scancode_t keyLeft, graphics::scancode_t keyRight, int l)
+Player::Player(const Game& mygame, float pos_x, float pos_y, float width, float height, scancode_t keyLeft, scancode_t keyRight, unsigned int l)
 			  : GameObject(mygame, pos_x, pos_y, width, height), keyLeft(keyLeft), keyRight(keyRight), life(l)
 {
 	// Draw player
-	br.texture = std::string(ASSET_PATH) + "ghost.png";
+	br.texture = string(ASSET_PATH) + "player.png";
 	br.outline_opacity = 0.0f;
 }
