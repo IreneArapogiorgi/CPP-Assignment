@@ -2,6 +2,7 @@
 
 void GameObject::draw()
 {
+	// Draw game object
 	drawRect(pos_x, pos_y, width, height, br);
 }
 

@@ -12,7 +12,6 @@ public:
 
 	void startingPos();
 	unsigned int getLife() const { return life; }
-	const float getSpeed() const { return speed; }
 	void reduceLife() { life = max<unsigned int>(0, life - 1); }
 	Player(const class Game& mygame, float pos_x, float pos_y, float width, float height, 
 		   scancode_t keyLeft, scancode_t keyRight, unsigned int life);

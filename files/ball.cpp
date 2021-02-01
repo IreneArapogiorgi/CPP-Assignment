@@ -8,6 +8,7 @@ void Ball::update()
 	// Avoid straight direction of ball
 	if (speedX > -0.1 * speed && speedX < 0.1 * speed) {
 		speedX *= 2;
+		// Avoid horizontal ball movement
 		if (speedX == 0) {
 			random_device rd;
 			mt19937 mt(rd());
@@ -19,6 +20,7 @@ void Ball::update()
 	}
 	else if (speedY > -0.1 * speed && speedY < 0.1 * speed) {
 		speedY *= 2;
+		// Avoid vertical ball movement
 		if (speedY == 0) {
 			random_device rd;
 			mt19937 mt(rd());
@@ -31,6 +33,7 @@ void Ball::update()
 
 	bool play_sound = false;
 
+	// Re-direct ball when hitting canvas borders
 	if (flag == true) {
 		if (pos_x >= CANVAS_WIDTH || pos_x <= 0) {
 			if (pos_x < -1.0) {
@@ -46,6 +49,7 @@ void Ball::update()
 		pos_y += speedY;
 	}
 
+	// Play sound when ball hits canvas borders
 	if (play_sound) {
 		string sound = string(ASSET_PATH) + "ball_sound.wav";
 		playSound(sound, 1.0f);
@@ -63,6 +67,7 @@ void Ball::draw()
 		drawRect(pos_x + (speedX * -2), pos_y + (speedY * -2), width, height, br);
 	}
 
+	// Draw ball
 	br.fill_opacity = 1.0;
 	drawRect(pos_x, pos_y, width, height, br);
 }
@@ -73,7 +78,7 @@ void Ball::init()
 
 void Ball::start()
 {
-	// Player can choose direction of the launching ball
+	// Player chooses direction of the launching ball by key pressed
 	if (getKeyState(keyLeft))
 	{
 		flag = true;
@@ -167,11 +172,11 @@ int Ball::checkCollision(GameObject* objects[], int size)
 						}
 					}
 				}
-				// If deltaY==0, ball rests on a vertical surface
+				// If deltaY == 0, ball rests on a vertical surface
 				else if (deltaY == 0) {
 					reflectX();
 				}
-				// If deltax==0, ball rests on a horizontal surface
+				// If deltaX == 0, ball rests on a horizontal surface
 				else {
 					reflectY();
 				}

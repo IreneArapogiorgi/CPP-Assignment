@@ -1,4 +1,9 @@
-// C++ ASSIGNMENT -- p3130139 - t8160012
+/* Copyright (C) 2020-2021, Irene Arapogiorgi and Dimitris Bastas
+*
+*  All rights reserved.
+* 
+*  This project is developed as the main assignment delivered for Programming in C++ course.
+*/
 
 #include "graphics.h"
 #include "config.h"

@@ -34,6 +34,7 @@ void LevelScreen::createPlayers()
 
 void LevelScreen::createObstacles()
 {
+	// Helper table for obstacle positioning
 	float st[12][2] = { { 3.5,4 },
 						{ 4,5 },
 						{ 4,8 },
