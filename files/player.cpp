@@ -5,11 +5,11 @@ void Player::update()
 	// Move player using given keys
 	if (getKeyState(keyLeft))
 	{
-		pos_x -= speed * getDeltaTime() / BALL_MOVEMENT;
+		pos_x -= speed * getDeltaTime() / MOVEMENT;
 	}
 	if (getKeyState(keyRight))
 	{
-		pos_x += speed * getDeltaTime() / BALL_MOVEMENT;
+		pos_x += speed * getDeltaTime() / MOVEMENT;
 	}
 
 	// Keep player within canvas borders
