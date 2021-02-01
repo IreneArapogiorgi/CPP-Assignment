@@ -7,6 +7,7 @@ This repository contains the assignment delivered for Programming in C++ course,
 This repository contains:
 
 The [files](files/) folder having all ```.cpp``` and ```.h``` files needed in order to build the project.
+
 The [assets](assets/) folder having all assets included in the project.
 
 ## Getting Started
