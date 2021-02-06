@@ -25,5 +25,5 @@ public:
 	void setPosX(float x) { pos_x = x; }
 	void setPosY(float y) { pos_y = y; }
 	GameObject(const class Game& mygame, float pos_x, float pos_y, float width, float height);
-	~GameObject();
+	virtual ~GameObject();
 };

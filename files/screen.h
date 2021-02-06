@@ -23,5 +23,5 @@ public:
 	void setStatus(status_t st) { status = st; }
 	status_t getStatus() const { return status; }
 	Screen(const class Game& mygame);
-	~Screen();
+	virtual ~Screen();
 };
