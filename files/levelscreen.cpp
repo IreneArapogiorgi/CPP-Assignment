@@ -54,9 +54,9 @@ void LevelScreen::createObstacles()
 	bool t = false;
 	if (level == 1) t = true;
 
-	for (int i = 0; i < OBSTACLE_ROWS; i++) {
+	for (int i = 0; i < OBSTACLE_ROWS; ++i) {
 		obstacles[i] = new Obstacle * [OBSTACLES_PER_ROW * level];
-		for (int j = 0; j < (OBSTACLES_PER_ROW * level); j++) {
+		for (int j = 0; j < (OBSTACLES_PER_ROW * level); ++j) {
 			if (!t && j > (OBSTACLES_PER_ROW * level) / 2 - 1) {
 				space = 80;
 				t = true;
@@ -92,7 +92,7 @@ void LevelScreen::update()
 		ball->update();
 
 		// Check collision between ball and obstacles
-		for (int i = 0; i < OBSTACLE_ROWS; i++) {
+		for (int i = 0; i < OBSTACLE_ROWS; ++i) {
 			int index = ball->checkCollision(reinterpret_cast<GameObject**>(obstacles[i]), OBSTACLES_PER_ROW * level);
 
 			if (index != -1)
@@ -218,8 +218,8 @@ void LevelScreen::draw()
 
 	// Draw obstacles
 	if (obstacles) {
-		for (int i = 0; i < OBSTACLE_ROWS; i++) {
-			for (int j = 0; j < OBSTACLES_PER_ROW * level; j++) {
+		for (int i = 0; i < OBSTACLE_ROWS; ++i) {
+			for (int j = 0; j < OBSTACLES_PER_ROW * level; ++j) {
 				if (obstacles[i][j] && obstacles[i][j]->isAlive()) {
 					obstacles[i][j]->draw();
 				}
@@ -274,8 +274,8 @@ LevelScreen::~LevelScreen()
 	}
 
 	// Delete obstacles
-	for (int i = 0; i < OBSTACLE_ROWS; i++) {
-		for (int j = 0; j < OBSTACLES_PER_ROW * level; j++) {
+	for (int i = 0; i < OBSTACLE_ROWS; ++i) {
+		for (int j = 0; j < OBSTACLES_PER_ROW * level; ++j) {
 			if (obstacles[i][j])
 			{
 				delete obstacles[i][j];

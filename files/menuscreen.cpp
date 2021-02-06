@@ -9,7 +9,7 @@ void MenuScreen::update()
 	bPoint = 0;
 
 	// Level options
-	for (int i = 1; i < 4; i++) {
+	for (int i = 1; i < 4; ++i) {
 		if (pos_y >= MENUSCREEN_HEIGHT * (i + 2.5) - 25 && pos_y <= MENUSCREEN_HEIGHT * (i + 2.5) + 5) {
 			if (pos_x >= MENUSCREEN_WIDTH - 60 && pos_x <= MENUSCREEN_WIDTH + 40) {
 				if (mouse.button_left_pressed) {
@@ -21,7 +21,7 @@ void MenuScreen::update()
 	}
 
 	// Difficulty options
-	for (int i = 0; i < 2; i++) {
+	for (int i = 0; i < 2; ++i) {
 		if (pos_y >= MENUSCREEN_HEIGHT * 7.5 - 25 && pos_y <= MENUSCREEN_HEIGHT * 7.5 + 5) {
 			if (pos_x >= MENUSCREEN_WIDTH - 120 + (i * 65) && pos_x <= MENUSCREEN_WIDTH + 30 + (i * 65)) {
 				if (mouse.button_left_pressed) {
